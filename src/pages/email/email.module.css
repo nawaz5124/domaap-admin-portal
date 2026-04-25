@@ -1,0 +1,884 @@
+/* ===================================================================
+   📧 Email Centre - CSS Module
+   ===================================================================
+   Location: src/pages/email/email.module.css
+   Created:  February 2026 - Phase 1 Email Centre
+   Purpose:  Responsive styles for the Email Centre page.
+             Follows the same breakpoint pattern as other portal pages.
+   =================================================================== */
+
+/* ------------------------------------------------------------------
+   PAGE CONTAINER
+   ------------------------------------------------------------------ */
+.pageContainer {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.pageTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1E3A5F;
+  margin-bottom: 24px;
+}
+
+/* ------------------------------------------------------------------
+   COMPOSE BAR
+   ------------------------------------------------------------------ */
+.composeBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.composeBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+
+.composeBtn:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.composeSpacer {
+  flex: 1;
+}
+
+.generateBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  background: #22C55E;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.generateBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ------------------------------------------------------------------
+   ANALYTICS CARDS
+   ------------------------------------------------------------------ */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.statCard {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.statIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.statContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.statNumber {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1E3A5F;
+  line-height: 1.2;
+}
+
+.statChange {
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.statChangeUp {
+  color: #22C55E;
+}
+
+.statChangeDown {
+  color: #EF4444;
+}
+
+.statLabel {
+  font-size: 13px;
+  color: #6B7280;
+  margin-top: 2px;
+}
+
+/* ------------------------------------------------------------------
+   CATEGORY TABS
+   ------------------------------------------------------------------ */
+.tabsWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.tabAll {
+  /* Inherits .tab styles — semantic class for mobile targeting */
+}
+
+.tabsScroll {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #E5E7EB;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  border-color: #1E3A5F;
+  color: #1E3A5F;
+}
+
+.tabActive {
+  background: #1E3A5F;
+  color: #fff;
+  border-color: #1E3A5F;
+}
+
+.tabCount {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.tabActive .tabCount {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ------------------------------------------------------------------
+   SEARCH & FILTER ROW
+   ------------------------------------------------------------------ */
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 14px 10px 38px;
+  border-radius: 10px;
+  border: 1px solid #E5E7EB;
+  font-size: 14px;
+  color: #374151;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") 12px center no-repeat;
+  transition: border-color 0.2s;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filterSelect {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #E5E7EB;
+  font-size: 14px;
+  color: #374151;
+  background: #fff;
+  cursor: pointer;
+  min-width: 140px;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: #3B82F6;
+}
+
+.dateBtn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #E5E7EB;
+  background: #fff;
+  font-size: 14px;
+  color: #6B7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: border-color 0.2s;
+}
+
+.dateBtn:hover {
+  border-color: #3B82F6;
+  color: #374151;
+}
+
+/* ------------------------------------------------------------------
+   EMAIL TABLE CARD
+   ------------------------------------------------------------------ */
+.tableCard {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableHead {
+  background: #F9FAFB;
+}
+
+.tableHead th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.tableRow {
+  transition: background 0.15s;
+}
+
+.tableRow:hover {
+  background: #F9FAFB;
+}
+
+.tableRow td {
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #374151;
+  border-bottom: 1px solid #F3F4F6;
+  vertical-align: middle;
+}
+
+.tableRowFailed {
+  background: #FEF2F2;
+}
+
+.tableRowFailed:hover {
+  background: #FEE2E2;
+}
+
+/* Checkbox column */
+.checkboxCell {
+  width: 40px;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #1E3A5F;
+}
+
+/* Type badge */
+.typeBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Subject */
+.subjectText {
+  font-weight: 600;
+  color: #1E3A5F;
+}
+
+.subjectFailed {
+  color: #EF4444;
+}
+
+/* Recipients */
+.recipientText {
+  color: #6B7280;
+  font-size: 13px;
+}
+
+/* Date */
+.dateText {
+  color: #6B7280;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.dateScheduled {
+  color: #F97316;
+  font-weight: 600;
+}
+
+/* Status badge */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Actions */
+.actionsCell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.actionBtn {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid #E5E7EB;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.15s;
+}
+
+.actionBtn:hover {
+  background: #F3F4F6;
+  border-color: #D1D5DB;
+}
+
+.actionBtnDanger {
+  composes: actionBtn;
+}
+
+.actionBtnDanger:hover {
+  background: #FEF2F2;
+  border-color: #EF4444;
+  color: #EF4444;
+}
+
+/* ------------------------------------------------------------------
+   PAGINATION — Now uses shared PaginationBar component
+   (Old custom styles removed — PaginationBar has its own style jsx)
+   ------------------------------------------------------------------ */
+
+/* ------------------------------------------------------------------
+   LOADING & EMPTY STATES
+   ------------------------------------------------------------------ */
+.loadingOverlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #6B7280;
+  gap: 12px;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #E5E7EB;
+  border-top-color: #3B82F6;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  color: #9CA3AF;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.emptyTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #6B7280;
+  margin-bottom: 4px;
+}
+
+.emptySubtext {
+  font-size: 14px;
+}
+
+/* ------------------------------------------------------------------
+   DAILY QUOTE
+   ------------------------------------------------------------------ */
+.quoteCard {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+  text-align: center;
+  color: #9CA3AF;
+  font-style: italic;
+  font-size: 14px;
+}
+
+/* ------------------------------------------------------------------
+   EMAIL DETAIL MODAL
+   ------------------------------------------------------------------ */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modalCard {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 520px;
+  max-height: 85vh;
+  overflow-y: auto;
+  animation: slideUp 0.2s ease-out;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #E5E7EB;
+  background: #F9FAFB;
+  border-radius: 16px 16px 0 0;
+}
+
+.modalTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1E3A5F;
+}
+
+.modalCloseBtn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid #E5E7EB;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #6B7280;
+  transition: all 0.15s;
+}
+
+.modalCloseBtn:hover {
+  background: #FEF2F2;
+  border-color: #EF4444;
+  color: #EF4444;
+}
+
+.modalBody {
+  padding: 20px;
+}
+
+.modalStatusRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.modalDetailGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.modalDetailRow {
+  display: flex;
+  padding: 10px 0;
+  border-bottom: 1px solid #F3F4F6;
+  gap: 12px;
+}
+
+.modalDetailRow:last-child {
+  border-bottom: none;
+}
+
+.modalDetailLabel {
+  width: 90px;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding-top: 2px;
+}
+
+.modalDetailValue {
+  font-size: 14px;
+  color: #1E3A5F;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.modalDetailSub {
+  color: #6B7280;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.modalDetailError {
+  background: #FEF2F2;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 4px;
+}
+
+.modalDetailError .modalDetailValue {
+  color: #EF4444;
+}
+
+.modalFooter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border-top: 1px solid #E5E7EB;
+  background: #F9FAFB;
+  border-radius: 0 0 16px 16px;
+}
+
+.modalResendBtn {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #3B82F6;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.modalResendBtn:hover {
+  background: #2563EB;
+}
+
+.modalCloseFooterBtn {
+  margin-left: auto;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid #E5E7EB;
+  background: #fff;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.modalCloseFooterBtn:hover {
+  background: #F3F4F6;
+}
+
+/* ------------------------------------------------------------------
+   RESPONSIVE BREAKPOINTS
+   ------------------------------------------------------------------ */
+
+/* Tablet landscape (≤1024px) */
+@media (max-width: 1024px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .composeBar {
+    gap: 8px;
+  }
+
+  .composeBtn {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+}
+
+/* Tablet portrait (≤768px) */
+@media (max-width: 768px) {
+  .pageContainer {
+    padding: 16px;
+  }
+
+  .pageTitle {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .filterRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchInput {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .filterSelect {
+    width: 100%;
+    min-width: unset;
+  }
+
+  /* ── Case 3: Hide columns on mobile, show Subject + Recipient + Status ── */
+  .colHideMobile {
+    display: none;
+  }
+
+  /* Remove forced min-width — 3 columns fit naturally */
+  .table {
+    min-width: unset;
+  }
+
+  /* Tappable rows — cursor hint + subtle active state */
+  .tableRow {
+    cursor: pointer;
+  }
+
+  .tableRow:active {
+    background: #EEF2FF;
+  }
+
+  .tabsScroll {
+    gap: 6px;
+  }
+
+  .tab {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+/* Mobile (≤640px) */
+@media (max-width: 640px) {
+  /* ── Stats: Donor Bank Summary list style on mobile ── */
+  .statsGrid {
+    grid-template-columns: 1fr;            /* Single column */
+    gap: 0;                                /* No gap — rows touch */
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+  }
+
+  .statCard {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 1px solid #F3F4F6;
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .statCard:last-child {
+    border-bottom: none;
+  }
+
+  .statIcon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+
+  /* Rearrange: label left, number right (using CSS Grid) */
+  .statContent {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 0 8px;
+  }
+
+  .statLabel {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+    margin-top: 0;
+  }
+
+  .statNumber {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 22px;
+    text-align: right;
+  }
+
+  .statChange {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    font-size: 11px;
+    margin-top: 2px;
+  }
+
+  /* ── Case 1 Fix: 2-column grid instead of single column ── */
+  .composeBar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;       /* Two equal columns */
+    gap: 8px;                              /* Consistent gap between buttons */
+    padding: 14px;                         /* Slightly tighter on mobile */
+  }
+
+  .composeBtn {
+    justify-content: center;
+    padding: 10px 8px;                     /* Slightly narrower padding */
+    font-size: 13px;                       /* Slightly smaller text */
+  }
+
+  .composeSpacer {
+    display: none;                         /* Hide the flex spacer */
+  }
+
+  .generateBtn {
+    justify-content: center;               /* Sits in grid naturally — 3 clean rows */
+  }
+
+  /* ── Tabs: "All" full width + category tabs 2-column grid ── */
+  .tabsWrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .tabAll {
+    width: 100%;
+    justify-content: center;
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+
+  .tabsScroll {
+    display: grid;
+    grid-template-columns: 1fr 1fr;        /* 2 columns — 6 tabs = 3 rows */
+    gap: 6px;
+  }
+
+  .tabsScroll .tab {
+    justify-content: center;               /* Centre text in each cell */
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+}
+
+/* Small mobile (≤380px) */
+@media (max-width: 380px) {
+  .pageContainer {
+    padding: 12px;
+  }
+
+  .pageTitle {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,878 @@
+/* ===================================================================
+   👤 Donor Profile Search Page Styles
+   ===================================================================
+   Location: src/pages/donor-profile/donor-profile.module.css
+   Pattern:  Desktop-first (max-width)
+   Breakpoints: 1024 (tablet landscape) / 768 (tablet portrait) / 640 (mobile) / 380 (tiny)
+   Note:     Search card & Pagination styles live in their components.
+             This file covers: header, search indicator, table, preview,
+             skeleton, empty state, action buttons.
+   =================================================================== */
+
+/* ============================================ */
+/* DEFAULT STYLES (Desktop - >1024px)           */
+/* ============================================ */
+
+/* --- Page Header --- */
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pageTitle {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1e3a5f;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.headerStats {
+  display: flex;
+  gap: 8px;
+}
+
+.statBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.statBadge strong {
+  font-weight: 700;
+}
+
+.statBadgeBlue {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.statBadgeGreen {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.btnAdd {
+  background-color: #22c55e;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 4px rgba(34, 197, 94, 0.3);
+  white-space: nowrap;
+}
+
+.btnAdd:hover {
+  background-color: #16a34a;
+}
+
+.btnAddText {}
+
+/* --- Search Indicator --- */
+.searchIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 10px 16px;
+  background-color: #eff6ff;
+  border-radius: 8px;
+  border: 1px solid #bfdbfe;
+  font-size: 14px;
+  color: #1d4ed8;
+}
+
+.btnClearSearch {
+  background: white;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btnClearSearch:hover {
+  background-color: #dbeafe;
+}
+
+/* --- Error --- */
+.errorMessage {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+/* --- Two Column Layout --- */
+.twoColumnGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* --- Table Card --- */
+.tableCard {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.tableHeader {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tableTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e3a5f;
+  margin: 0;
+}
+
+.tableHint {
+  font-size: 12px;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.tableWrapper {
+  flex: 1;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dataTable thead tr {
+  background-color: #f9fafb;
+}
+
+.dataTable th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+  background-color: #f9fafb;
+}
+
+.dataTable td {
+  padding: 14px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.dataRow {
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.dataRow:hover {
+  background-color: #f9fafb;
+}
+
+.rowSelected {
+  background-color: #eff6ff !important;
+}
+
+.cftNo {
+  color: #3b82f6;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.textName {
+  font-weight: 500;
+  color: #374151;
+}
+
+.textCancelled {
+  font-weight: 500;
+  color: #ef4444;
+}
+
+.textEmail {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.colCenter {
+  text-align: center;
+}
+
+.colP2 {}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* --- Skeleton Loading --- */
+.skeletonRow td {
+  padding: 14px 16px;
+}
+
+.skeletonCell {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  height: 16px;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* --- Table Empty State --- */
+.emptyState {
+  padding: 48px 20px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.emptyIcon {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.emptySubtitle {
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.btnClearEmpty {
+  margin-top: 12px;
+  background: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* --- Preview Card --- */
+.previewCard {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.previewActive {
+  border: 2px solid #3b82f6;
+}
+
+/* --- Preview Header --- */
+.previewHeader {
+  padding: 16px;
+  background-color: #eff6ff;
+  border-bottom: 1px solid #dbeafe;
+}
+
+.previewHeaderRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.previewInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.previewName {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1e3a5f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.previewMeta {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.previewBadges {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+/* --- Preview Stats Row --- */
+.previewStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.previewStatItem {
+  padding: 12px 8px;
+  text-align: center;
+  border-right: 1px solid #e5e7eb;
+}
+
+.previewStatItem:last-child {
+  border-right: none;
+}
+
+.previewStatValue {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.previewStatLabel {
+  font-size: 10px;
+  color: #6b7280;
+}
+
+/* --- Preview Details --- */
+.previewDetails {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 16px;
+  gap: 16px;
+}
+
+/* --- Recent Donations (fills extra space) --- */
+.recentDonations {
+  flex: 1;
+  padding: 0 16px 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.recentDonationsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.recentDonationsTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
+}
+
+.recentDonationsHint {
+  font-size: 11px;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.donationsList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+}
+
+.donationRow {
+  display: grid;
+  grid-template-columns: 90px 80px 1fr 80px;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 12px;
+  align-items: center;
+}
+
+.donationRow:last-child {
+  border-bottom: none;
+}
+
+.donationDate {
+  color: #6b7280;
+  font-size: 11px;
+}
+
+.donationAmount {
+  font-weight: 600;
+  color: #1e3a5f;
+}
+
+.donationCause {
+  color: #374151;
+}
+
+.donationStatus {
+  text-align: right;
+}
+
+.donationStatusBadge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.noDonations {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 13px;
+  font-style: italic;
+  padding: 16px 0;
+}
+
+.detailHeading {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 10px 0;
+}
+
+.detailList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detailEmail {
+  font-size: 12px;
+  color: #3b82f6;
+  word-break: break-all;
+}
+
+.detailItem {
+  font-size: 12px;
+  color: #374151;
+}
+
+.detailAddress {
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+.consentRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.consentBadge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.consentYes {
+  background-color: #f0fdf4;
+  color: #22c55e;
+}
+
+.consentNo {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+/* --- Donor Details Section --- */
+.donorDetailsSection {
+  padding: 12px 16px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.donorDetailsTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 10px 0;
+}
+
+.donorDetailsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px 16px;
+}
+
+.donorDetailCell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.donorDetailLabel {
+  font-size: 10px;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.donorDetailValue {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.donorDetailMono {
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #6b7280;
+  word-break: break-all;
+}
+
+/* --- Preview Actions --- */
+.previewActions {
+  padding: 12px 16px;
+  background-color: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.actionBtn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.actionAmber {
+  background-color: #fef3c7;
+  border: 1px solid #fcd34d;
+  color: #92400e;
+}
+
+.actionAmber:hover {
+  background-color: #fde68a;
+}
+
+.actionBlue {
+  background-color: #eff6ff;
+  border: 1px solid #3b82f6;
+  color: #3b82f6;
+}
+
+.actionBlue:hover {
+  background-color: #dbeafe;
+}
+
+.actionPrimary {
+  background-color: #1e3a5f;
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  margin-left: auto;
+}
+
+.actionPrimary:hover {
+  background-color: #163252;
+}
+
+.actionBtnText {}
+
+/* --- Preview Empty State --- */
+.previewEmpty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 30px;
+  text-align: center;
+  color: #9ca3af;
+}
+
+.previewEmptyIcon {
+  font-size: 56px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.previewEmptyTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.previewEmptyText {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+/* ============================================ */
+/* TABLET LANDSCAPE (768px - 1024px)            */
+/* 50/50 side-by-side, hide email column        */
+/* ============================================ */
+@media (max-width: 1024px) {
+  .colP2 {
+    display: none;
+  }
+
+  .tableHint {
+    display: none;
+  }
+
+  .previewBadges {
+    display: none;
+  }
+
+  .previewHeaderRow {
+    gap: 10px;
+  }
+
+  .avatar {
+    width: 42px;
+    height: 42px;
+    font-size: 15px;
+  }
+
+  .previewName {
+    font-size: 16px;
+  }
+
+  .previewStatValue {
+    font-size: 14px;
+  }
+
+  .previewDetails {
+    padding: 14px;
+  }
+}
+
+
+/* ============================================ */
+/* TABLET PORTRAIT (<768px)                     */
+/* Stack: table on top, preview below           */
+/* ============================================ */
+@media (max-width: 768px) {
+  .twoColumnGrid {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .previewCard {
+    position: relative;
+    top: 0;
+  }
+
+  .previewStats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .previewDetails {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+/* ============================================ */
+/* MOBILE (<640px)                              */
+/* Stacked, compact, icon-only actions          */
+/* ============================================ */
+@media (max-width: 640px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .headerLeft {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .pageTitle {
+    font-size: 20px;
+  }
+
+  .btnAdd {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Search indicator: stack */
+  .searchIndicator {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .btnClearSearch {
+    align-self: flex-end;
+  }
+
+  /* Preview stats: 2×2 grid */
+  .previewStats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .previewStatItem {
+    padding: 10px 6px;
+  }
+
+  .previewStatItem:nth-child(2) {
+    border-right: none;
+  }
+
+  /* Preview details: single column */
+  .previewDetails {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* Recent donations: compact */
+  .donationRow {
+    grid-template-columns: 70px 65px 1fr 65px;
+    gap: 4px;
+    font-size: 11px;
+  }
+
+  .donationDate {
+    font-size: 10px;
+  }
+
+  /* Donor details: 2 columns on mobile */
+  .donorDetailsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 12px;
+  }
+
+  /* Action buttons: icon only */
+  .actionBtnText {
+    display: none;
+  }
+
+  .actionBtn {
+    padding: 8px 10px;
+    gap: 0;
+  }
+
+  .actionPrimary {
+    width: 100%;
+    justify-content: center;
+    margin-left: 0;
+    margin-top: 4px;
+  }
+
+  /* Table: tighter */
+  .dataTable th,
+  .dataTable td {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}
+
+
+/* ============================================ */
+/* TINY (<380px)                                */
+/* Maximum compression                          */
+/* ============================================ */
+@media (max-width: 380px) {
+  .pageTitle {
+    font-size: 18px;
+  }
+
+  .statBadge {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .previewStatValue {
+    font-size: 13px;
+  }
+
+  .previewStatLabel {
+    font-size: 9px;
+  }
+
+  .dataTable th,
+  .dataTable td {
+    padding: 8px 8px;
+    font-size: 11px;
+  }
+}

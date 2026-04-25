@@ -1,0 +1,1075 @@
+/* ===================================================================
+   ✉️ Compose Email Page — Styles
+   =================================================================
+   Location: src/pages/email/compose.module.css
+   Created: February 2026 - Phase 2, Step 2.5
+   Updated: February 2026 - Added Quill editor + emoji picker styles
+   Design: Mobile-first, matching DOMAAP admin theme
+           Dark green (#1E3A5F), Gold (#d4af37), Clean white cards
+   ================================================================= */
+
+/* ============ PAGE CONTAINER ============ */
+.pageContainer {
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding: 16px;
+  padding-bottom: 100px;
+}
+
+/* ============ HEADER ============ */
+.header {
+  margin-bottom: 20px;
+}
+
+.backBtn {
+  display: flex;                           /* Block-level flex — takes full row */
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: #1E3A5F;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 12px 8px 0;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+  width: fit-content;                      /* Shrink to text width */
+}
+
+.backBtn:hover {
+  color: #D4AF37;
+}
+
+.pageTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1E3A5F;
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 3px solid #D4AF37;
+  display: inline-block;
+}
+
+/* ============ MAIN LAYOUT ============ */
+.mainLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ============ FORM COLUMN ============ */
+.formColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ============ FORM SECTIONS ============ */
+.formSection {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e8ecf0;
+  border-left: 4px solid #D4AF37;          /* Gold accent stripe */
+}
+
+.fieldLabel {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1E3A5F;
+  margin-bottom: 10px;
+  letter-spacing: 0.3px;
+}
+
+/* ============ INPUTS ============ */
+.inputField {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #e0e4e8;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  background: #fafbfc;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #1E3A5F;
+  box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+  background: white;
+}
+
+.inputField::placeholder {
+  color: #adb5bd;
+}
+
+.inputFieldSmall {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #e0e4e8;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  background: #fafbfc;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  max-width: 120px;
+  flex-shrink: 0;
+}
+
+.inputFieldSmall:focus {
+  outline: none;
+  border-color: #1E3A5F;
+  box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+  background: white;
+}
+
+.inputFieldSmall::placeholder {
+  color: #adb5bd;
+}
+
+.fieldRow {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.fieldRow .inputField {
+  flex: 1;
+}
+
+.selectField {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #e0e4e8;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  background: #fafbfc;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231a472a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.selectField:focus {
+  outline: none;
+  border-color: #1E3A5F;
+  box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+  background-color: white;
+}
+
+/* ============ MESSAGE HEADER (label + emoji) ============ */
+.messageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+
+.messageHeader .fieldLabel {
+  margin-bottom: 0;
+}
+
+/* ============ RICH TEXT EDITOR (Quill) ============ */
+.editorWrapper {
+  border: 1.5px solid #e0e4e8;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fafbfc;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.editorWrapper:focus-within {
+  border-color: #1E3A5F;
+  box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+  background: white;
+}
+
+/* Override Quill default styles to match DOMAAP theme */
+.editorWrapper :global(.ql-toolbar) {
+  border: none !important;
+  border-bottom: 1px solid #e8ecf0 !important;
+  background: #f8f9fa;
+  padding: 8px !important;
+}
+
+.editorWrapper :global(.ql-container) {
+  border: none !important;
+  font-size: 14px;
+  font-family: inherit;
+  min-height: 160px;
+}
+
+.editorWrapper :global(.ql-editor) {
+  min-height: 160px;
+  padding: 14px;
+  line-height: 1.7;
+  color: #333;
+}
+
+.editorWrapper :global(.ql-editor.ql-blank::before) {
+  color: #adb5bd;
+  font-style: normal;
+}
+
+.editorWrapper :global(.ql-toolbar .ql-stroke) {
+  stroke: #555;
+}
+
+.editorWrapper :global(.ql-toolbar .ql-fill) {
+  fill: #555;
+}
+
+.editorWrapper :global(.ql-toolbar button:hover .ql-stroke) {
+  stroke: #1E3A5F;
+}
+
+.editorWrapper :global(.ql-toolbar button:hover .ql-fill) {
+  fill: #1E3A5F;
+}
+
+.editorWrapper :global(.ql-toolbar button.ql-active .ql-stroke) {
+  stroke: #1E3A5F;
+}
+
+.editorWrapper :global(.ql-toolbar button.ql-active .ql-fill) {
+  fill: #1E3A5F;
+}
+
+/* ============ EMOJI PICKER ============ */
+.emojiWrapper {
+  position: relative;
+}
+
+.emojiToggleBtn {
+  background: none;
+  border: 1.5px solid #e0e4e8;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.15s;
+  line-height: 1;
+}
+
+.emojiToggleBtn:hover {
+  border-color: #1E3A5F;
+  background: rgba(30, 58, 95, 0.04);
+}
+
+.emojiDropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 6px;
+  background: white;
+  border: 1.5px solid #e0e4e8;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 2px;
+  z-index: 60;
+  width: 280px;
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.emojiItem {
+  background: none;
+  border: none;
+  font-size: 20px;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.1s;
+  text-align: center;
+  line-height: 1;
+}
+
+.emojiItem:hover {
+  background: rgba(30, 58, 95, 0.08);
+}
+
+/* ============ TEMPLATE HINTS ============ */
+.templateHint {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #6b7280;
+  font-style: italic;
+  padding: 6px 10px;
+  background: rgba(30, 58, 95, 0.04);
+  border-radius: 6px;
+  border-left: 3px solid #d4af37;
+}
+
+.loadingText {
+  font-size: 13px;
+  color: #9ca3af;
+  padding: 10px 0;
+}
+
+/* ============ TEMPLATE FIELDS (DYNAMIC) ============ */
+.templateFieldsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.templateFieldItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.templateFieldLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+}
+
+.required {
+  color: #ef4444;
+}
+
+/* ============ DONOR SEARCH ============ */
+.donorSearchWrapper {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.searchSpinner {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  animation: pulse 1s infinite;
+  font-size: 14px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.donorDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1.5px solid #1E3A5F;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 50;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.donorOption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.15s;
+}
+
+.donorOption:last-child {
+  border-bottom: none;
+}
+
+.donorOption:hover {
+  background: rgba(30, 58, 95, 0.06);
+}
+
+.donorName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1E3A5F;
+}
+
+.donorMeta {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* ============ SELECTED DONOR BADGE ============ */
+.selectedDonor {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 12px;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1E3A5F;
+}
+
+.selectedDonorEmail {
+  font-weight: 400;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.selectedDonorCft {
+  font-size: 11px;
+  font-weight: 700;
+  background: #1E3A5F;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.clearDonorBtn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.clearDonorBtn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+/* ============ ACTION BUTTONS ============ */
+.actionButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.previewBtn,
+.sendBtn {
+  flex: 1;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+
+.previewBtn {
+  background: white;
+  color: #1E3A5F;
+  border: 2px solid #D4AF37;
+}
+
+.previewBtn:hover:not(:disabled) {
+  background: rgba(212, 175, 55, 0.08);
+  border-color: #C4A030;
+}
+
+.sendBtn {
+  background: linear-gradient(135deg, #1E3A5F 0%, #2B5A8C 100%);
+  color: white;
+  box-shadow: 0 4px 14px rgba(30, 58, 95, 0.35);
+}
+
+.sendBtn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #162F4D 0%, #1E3A5F 100%);
+  box-shadow: 0 6px 20px rgba(30, 58, 95, 0.45);
+  transform: translateY(-1px);
+}
+
+.previewBtn:disabled,
+.sendBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ============ RESULT BANNER ============ */
+.resultBanner {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.resultSuccess {
+  background: rgba(34, 197, 94, 0.1);
+  color: #15803d;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.resultError {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.resultSubtext {
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+/* ============ PREVIEW COLUMN — Slide-in Panel ============ */
+.previewBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 85;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+}
+
+.previewBackdropVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.previewColumn {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 480px;
+  max-width: 90vw;
+  background: white;
+  border-left: 1px solid #e8ecf0;
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 90;
+  transform: translateX(100%);           /* Hidden off-screen by default */
+  transition: transform 0.3s ease-out;
+}
+
+.previewVisible {
+  transform: translateX(0);              /* Slide in! */
+}
+
+.previewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #1E3A5F 0%, #2B5A8C 100%);
+  color: white;
+}
+
+.previewTitle {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.previewCloseBtn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s;
+}
+
+.previewCloseBtn:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.previewFrame {
+  flex: 1;
+  display: flex;
+}
+
+.previewIframe {
+  width: 100%;
+  flex: 1;
+  min-height: 0;                           /* Let flex handle height */
+  border: none;
+  background: #f5f7fa;
+}
+
+.previewPlaceholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.previewPlaceholderIcon {
+  font-size: 40px;
+  margin-bottom: 12px;
+  opacity: 0.3;
+}
+
+.previewPlaceholderText {
+  font-size: 13px;
+  color: #9ca3af;
+  line-height: 1.5;
+  max-width: 240px;
+}
+
+/* ============ MOBILE PREVIEW — full screen on small devices ============ */
+@media (max-width: 767px) {
+  .previewColumn {
+    width: 100%;
+    max-width: 100%;
+    border-left: none;
+    border-radius: 0;
+  }
+
+  .previewIframe {
+    min-height: calc(100vh - 52px);
+  }
+
+  /* Emoji dropdown on mobile — full width */
+  .emojiDropdown {
+    right: -60px;
+    width: 260px;
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* ============ TABLET (768px+) ============ */
+@media (min-width: 768px) {
+  .pageContainer {
+    padding: 24px;
+  }
+
+  .pageTitle {
+    font-size: 26px;
+  }
+
+  .formSection {
+    padding: 20px;
+  }
+
+  .templateFieldsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .previewIframe {
+    min-height: 600px;
+  }
+}
+
+/* ============ DESKTOP (1024px+) ============ */
+@media (min-width: 1024px) {
+  .pageContainer {
+    padding: 32px 40px;                    /* More horizontal padding */
+    max-width: none;                       /* Fill available space */
+    margin: 0;                             /* Align left after sidebar */
+  }
+
+  .formSection {
+    padding: 20px 24px;
+  }
+
+  .templateFieldsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .previewColumn {
+    width: 520px;                          /* Wider on desktop */
+  }
+
+  .previewIframe {
+    min-height: 700px;
+  }
+}
+
+/* ===================================================================
+   GROUP EMAIL STYLES — Phase 2, Step 2.7
+   ===================================================================
+   APPEND these styles to the END of compose.module.css
+   (before the media queries, or at the very bottom)
+   =================================================================== */
+
+/* ============ MODE TOGGLE ============ */
+.modeToggleWrapper {
+  margin-bottom: 16px;
+}
+
+.modeToggle {
+  display: inline-flex;
+  background: white;
+  border: 1.5px solid #e0e4e8;
+  border-radius: 10px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.modeBtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: #6b7280;
+  transition: all 0.2s;
+}
+
+.modeBtn:hover {
+  color: #1E3A5F;
+  background: rgba(30, 58, 95, 0.04);
+}
+
+.modeBtnActive {
+  background: #1E3A5F;
+  color: white;
+  box-shadow: 0 2px 8px rgba(30, 58, 95, 0.2);
+}
+
+.modeBtnActive:hover {
+  background: #1E3A5F;
+  color: white;
+}
+
+.modeHint {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.5;
+  padding-left: 4px;
+}
+
+/* ============ FILTER PANEL ============ */
+.filterHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.filterHeader .fieldLabel {
+  margin-bottom: 0;
+}
+
+.resetFiltersBtn {
+  background: none;
+  border: 1px solid #e0e4e8;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.resetFiltersBtn:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.04);
+}
+
+.filterGroup {
+  margin-bottom: 14px;
+}
+
+.filterLabel {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+/* ============ FILTER CHIPS ============ */
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.filterChip {
+  padding: 7px 14px;
+  border: 1.5px solid #e0e4e8;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+  background: #fafbfc;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.filterChip:hover {
+  border-color: #1E3A5F;
+  color: #1E3A5F;
+  background: rgba(30, 58, 95, 0.04);
+}
+
+.filterChipActive {
+  background: #1E3A5F;
+  color: white;
+  border-color: #1E3A5F;
+}
+
+.filterChipActive:hover {
+  background: #162F4D;
+  color: white;
+  border-color: #162F4D;
+}
+
+/* ============ MATCH COUNT BADGE ============ */
+.matchBadgeRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #e8ecf0;
+}
+
+.matchBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  background: #f0f0f0;
+  color: #6b7280;
+}
+
+.matchBadgeGreen {
+  background: rgba(34, 197, 94, 0.1);
+  color: #15803d;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.matchBadgeRed {
+  background: rgba(239, 68, 68, 0.08);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.matchCount {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.matchSpinner {
+  animation: pulse 1s infinite;
+}
+
+.previewListBtn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1E3A5F;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background-color 0.15s;
+}
+
+.previewListBtn:hover {
+  background: rgba(30, 58, 95, 0.06);
+}
+
+/* ============ DONOR PREVIEW LIST ============ */
+.donorPreviewList {
+  margin-top: 12px;
+  border: 1px solid #e8ecf0;
+  border-radius: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.donorPreviewItem {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 13px;
+}
+
+.donorPreviewItem:last-child {
+  border-bottom: none;
+}
+
+.donorPreviewName {
+  font-weight: 600;
+  color: #1E3A5F;
+  min-width: 100px;
+}
+
+.donorPreviewEmail {
+  color: #6b7280;
+  font-size: 12px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.donorPreviewTags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.tagVolunteer {
+  font-size: 10px;
+  font-weight: 700;
+  background: #1E3A5F;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
+.tagNewsletter {
+  font-size: 10px;
+  font-weight: 700;
+  background: #d4af37;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
+.tagDonated {
+  font-size: 10px;
+  font-weight: 500;
+  color: #6b7280;
+  background: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
+.donorPreviewMore {
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #9ca3af;
+  text-align: center;
+  font-style: italic;
+}
+
+/* ============ MERGE TAG HINT ============ */
+.mergeTagHint {
+  font-size: 11px;
+  font-weight: 400;
+  color: #d4af37;
+  margin-left: 4px;
+}
+
+/* ============ GROUP SEND BUTTON ============ */
+.sendGroupBtn {
+  flex: 1;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+  background: linear-gradient(135deg, #1E3A5F 0%, #2B5A8C 100%);
+  color: white;
+  box-shadow: 0 4px 14px rgba(30, 58, 95, 0.35);
+}
+
+.sendGroupBtn:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(30, 58, 95, 0.45);
+  transform: translateY(-1px);
+}
+
+.sendGroupBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ============ MOBILE ADJUSTMENTS FOR GROUP ============ */
+@media (max-width: 767px) {
+  .modeToggle {
+    width: 100%;
+    display: flex;
+  }
+
+  .modeBtn {
+    flex: 1;
+    text-align: center;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .donorPreviewItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+
+  .chipRow {
+    gap: 5px;
+  }
+
+  .filterChip {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .matchBadgeRow {
+    flex-wrap: wrap;
+  }
+}

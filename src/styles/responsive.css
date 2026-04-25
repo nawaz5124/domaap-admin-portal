@@ -1,0 +1,244 @@
+/* ===================================================================
+   📱 DOMAAP Responsive Global Styles
+   ===================================================================
+   Location: src/styles/responsive.css
+   
+   Add this to your _app.js:
+   import '../styles/responsive.css';
+   
+   Fixes:
+   - Smooth transitions during orientation change
+   - Prevents "tubelight" flickering effect
+   - Consistent animations across components
+   =================================================================== */
+
+/* ===================================================================
+   BASE TRANSITION FOR ALL RESPONSIVE ELEMENTS
+   =================================================================== */
+
+/* Smooth opacity transition for layout changes */
+.responsive-fade {
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Prevent layout shift during resize */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===================================================================
+   PREVENT FLICKERING DURING ORIENTATION CHANGE
+   =================================================================== */
+
+/* Apply to body during orientation change */
+@media screen and (orientation: portrait) {
+  body {
+    transition: none;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  body {
+    transition: none;
+  }
+}
+
+/* Smooth container transitions */
+.responsive-container {
+  transition: all 0.2s ease-in-out;
+  will-change: contents;
+}
+
+/* ===================================================================
+   MOBILE CARD VIEW STYLES
+   =================================================================== */
+
+.mobile-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid #e5e7eb;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mobile-card:active {
+  transform: scale(0.98);
+}
+
+.mobile-card.selected {
+  border: 2px solid #3b82f6;
+  background-color: #eff6ff;
+}
+
+/* ===================================================================
+   LOADING SKELETON ANIMATION
+   =================================================================== */
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeleton {
+  animation: pulse 1.5s ease-in-out infinite;
+  background-color: #f3f4f6;
+  border-radius: 4px;
+}
+
+/* ===================================================================
+   HORIZONTAL SCROLL FOR TABLETS
+   =================================================================== */
+
+.horizontal-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 3px;
+}
+
+/* Hide scrollbar for category tabs on mobile */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===================================================================
+   RESPONSIVE VISIBILITY HELPERS
+   =================================================================== */
+
+/* Mobile only (< 640px) */
+@media (min-width: 640px) {
+  .show-mobile-only {
+    display: none !important;
+  }
+}
+
+/* Tablet only (640px - 1024px) */
+@media (max-width: 639px), (min-width: 1024px) {
+  .show-tablet-only {
+    display: none !important;
+  }
+}
+
+/* Desktop only (>= 1024px) */
+@media (max-width: 1023px) {
+  .show-desktop-only {
+    display: none !important;
+  }
+}
+
+/* Hide on mobile */
+@media (max-width: 639px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
+/* Hide on tablet */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .hide-on-tablet {
+    display: none !important;
+  }
+}
+
+/* Hide on desktop */
+@media (min-width: 1024px) {
+  .hide-on-desktop {
+    display: none !important;
+  }
+}
+
+/* ===================================================================
+   BUTTON TOUCH STATES (Mobile)
+   =================================================================== */
+
+@media (max-width: 639px) {
+  button, 
+  [role="button"],
+  .clickable {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    touch-action: manipulation;
+  }
+  
+  button:active,
+  [role="button"]:active,
+  .clickable:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+}
+
+/* ===================================================================
+   SMOOTH LAYOUT TRANSITIONS
+   =================================================================== */
+
+/* Apply to main content area */
+.page-content {
+  transition: padding 0.2s ease;
+}
+
+/* Cards container */
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: gap 0.2s ease;
+}
+
+/* Table container */
+.table-container {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  overflow: hidden;
+  transition: border-radius 0.2s ease;
+}
+
+/* ===================================================================
+   FIX FOR iOS SAFARI ORIENTATION CHANGE
+   =================================================================== */
+
+@media screen and (orientation: landscape) {
+  html {
+    /* Prevent zoom on orientation change */
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+/* ===================================================================
+   PREVENT CONTENT JUMP DURING HYDRATION
+   =================================================================== */
+
+/* Hide content until mounted (use with mounted state) */
+.hydration-hide {
+  opacity: 0;
+  transition: opacity 0.15s ease-in;
+}
+
+.hydration-hide.mounted {
+  opacity: 1;
+}

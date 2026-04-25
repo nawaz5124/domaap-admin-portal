@@ -1,0 +1,782 @@
+/* ===================================================================
+   DOMAAP Reports & Exports Page - CSS Module
+   ===================================================================
+   Location: src/pages/reports/Reports.module.css
+   Theme: DOMAAP Admin Portal (#1E3A5F navy primary)
+   Pattern: Matches Email Centre buttons + Donor Bank search cards
+   
+   RESPONSIVE PATTERN (matching Donor Bank):
+     > 1024px      : Desktop    - Full layout, 3-col search, 3-col filters
+     640-1024px    : Tablet     - Compact search, 2-col filters
+     < 640px       : Mobile     - Stacked search, 1-col filters
+     < 380px       : Small      - Extra tight
+   =================================================================== */
+
+/* ------------------------------------------------------------------
+   PAGE CONTAINER
+   ------------------------------------------------------------------ */
+.pageContainer {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.pageTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1E3A5F;
+  margin-bottom: 24px;
+}
+
+/* ------------------------------------------------------------------
+   MAIN LAYOUT
+   ------------------------------------------------------------------ */
+.mainGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ------------------------------------------------------------------
+   REPORT TYPE BUTTONS - Email Centre Style
+   ------------------------------------------------------------------ */
+.reportTypeSection {
+  background: #F3F4F6;
+  border-radius: 16px;
+  padding: 16px 20px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.sidebarTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6B7280;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.reportTypeList {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.reportTypeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  transition: all 0.2s;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.reportTypeBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.reportTypeBtnActive {
+  outline: 3px solid #1E3A5F;
+  outline-offset: 2px;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.reportTypeBtnDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.reportTypeBtnDisabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.btnDonation { background: #3B82F6; }
+.btnDonorBook { background: #22C55E; }
+.btnGiftAid { background: #F59E0B; }
+.btnRecurring { background: #EF4444; }
+.btnLapsed { background: #EC4899; }
+
+.reportBtnIcon {
+  font-size: 16px;
+}
+
+.phaseBadge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  margin-left: 2px;
+}
+
+/* ------------------------------------------------------------------
+   DONOR SEARCH CARDS - Donor Bank Style
+   ------------------------------------------------------------------ */
+.searchSection {
+  margin-bottom: 0;
+}
+
+.searchTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6B7280;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.searchGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2%;
+  margin-bottom: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.searchCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 16px;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.searchCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.searchCardBlue { border: 2px solid #3B82F6; }
+.searchCardGreen { border: 2px solid #22C55E; }
+.searchCardOrange { border: 2px solid #F59E0B; }
+
+.searchCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  min-width: 0;
+}
+
+.searchCardIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.searchCardIconBlue { background: #EFF6FF; color: #3B82F6; }
+.searchCardIconGreen { background: #F0FDF4; color: #22C55E; }
+.searchCardIconOrange { background: #FFF7ED; color: #F59E0B; }
+
+.searchCardTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.searchCardSubtitle {
+  font-size: 11px;
+  color: #6B7280;
+  margin-top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.searchCardSeparator {
+  height: 1px;
+  background: #E5E7EB;
+  margin-bottom: 10px;
+}
+
+.searchCardInputRow {
+  display: flex;
+  gap: 6px;
+  min-width: 0;
+}
+
+.searchCardInput {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #374151;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.searchCardInput:focus {
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.searchCardBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.searchCardBtn:hover { opacity: 0.85; }
+.searchCardBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.searchBtnBlue { background: #3B82F6; }
+.searchBtnGreen { background: #22C55E; }
+.searchBtnOrange { background: #F59E0B; }
+
+/* Active search indicator */
+.activeSearchBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-top: 12px;
+}
+
+.activeSearchText {
+  font-size: 13px;
+  color: #1E3A5F;
+  font-weight: 500;
+}
+
+.activeSearchClear {
+  background: none;
+  border: 1px solid #93C5FD;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: #3B82F6;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.activeSearchClear:hover {
+  background: #3B82F6;
+  color: #fff;
+}
+
+/* ------------------------------------------------------------------
+   CONFIG PANEL
+   ------------------------------------------------------------------ */
+.configPanel {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.panelTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1E3A5F;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ------------------------------------------------------------------
+   DATE RANGE
+   ------------------------------------------------------------------ */
+.sectionLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.dateRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.dateInput {
+  padding: 10px 14px;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #374151;
+  background: #F9FAFB;
+  outline: none;
+  width: 170px;
+  transition: border-color 0.2s;
+}
+
+.dateInput:focus {
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.dateSeparator {
+  color: #6B7280;
+  font-size: 14px;
+}
+
+.periodRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.periodBtn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #D1D5DB;
+  background: #fff;
+  color: #374151;
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.periodBtn:hover {
+  border-color: #1E3A5F;
+  color: #1E3A5F;
+}
+
+.periodBtnActive {
+  background: #1E3A5F;
+  color: #fff;
+  border-color: #1E3A5F;
+}
+
+/* ------------------------------------------------------------------
+   FILTER CONTROLS
+   ------------------------------------------------------------------ */
+.filterGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filterLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.filterSelect {
+  padding: 10px 32px 10px 14px;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #374151;
+  background: #fff;
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  transition: border-color 0.2s;
+}
+
+.filterSelect:focus {
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.generateRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.generateBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  background: #22C55E;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.generateBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ------------------------------------------------------------------
+   PREVIEW SUMMARY STATS
+   ------------------------------------------------------------------ */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.statCard {
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+.statCardGreen { background: #F0FDF4; border: 1px solid #BBF7D0; }
+.statCardRed { background: #FEF2F2; border: 1px solid #FECACA; }
+
+.statNumber {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.statNumberGreen { color: #22C55E; }
+.statNumberRed { color: #EF4444; }
+
+.statLabel {
+  font-size: 12px;
+  color: #6B7280;
+  margin-top: 2px;
+}
+
+/* ------------------------------------------------------------------
+   PREVIEW TABLE
+   ------------------------------------------------------------------ */
+.tableCard {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #E5E7EB;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableHead { background: #F9FAFB; }
+
+.tableHead th {
+  padding: 12px 12px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-bottom: 1px solid #E5E7EB;
+  white-space: nowrap;
+}
+
+.tableHead th:last-child { text-align: right; }
+
+.tableRow { transition: background 0.15s; }
+.tableRow:hover { background: #F9FAFB; }
+
+.tableRow td {
+  padding: 12px 12px;
+  font-size: 13px;
+  color: #374151;
+  border-bottom: 1px solid #F3F4F6;
+  vertical-align: middle;
+}
+
+.tableRow td:last-child { text-align: right; font-weight: 600; }
+
+.giftAidYes { color: #22C55E; font-weight: 600; }
+.giftAidNo { color: #EF4444; font-weight: 600; }
+
+.moreRows {
+  text-align: center;
+  padding: 12px;
+  color: #9CA3AF;
+  font-size: 13px;
+}
+
+/* ------------------------------------------------------------------
+   DOWNLOAD BUTTONS
+   ------------------------------------------------------------------ */
+.downloadRow {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.downloadBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  color: #fff;
+  transition: opacity 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+
+.downloadBtn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.btnPdf { background: #EF4444; box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3); }
+.btnCsv { background: #3B82F6; box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3); }
+.btnHmrc { background: #EC4899; box-shadow: 0 2px 6px rgba(236, 72, 153, 0.3); }
+
+.hmrcNote {
+  font-size: 10px;
+  color: #9CA3AF;
+  text-align: center;
+  margin-top: 6px;
+  font-style: italic;
+}
+
+/* ------------------------------------------------------------------
+   EMPTY / LOADING STATES
+   ------------------------------------------------------------------ */
+.emptyState {
+  text-align: center;
+  padding: 48px 24px;
+  color: #9CA3AF;
+}
+
+.emptyIcon { font-size: 48px; margin-bottom: 12px; }
+.emptyText { font-size: 15px; color: #6B7280; margin-bottom: 4px; }
+.emptySubtext { font-size: 13px; color: #9CA3AF; }
+
+
+/* ==================================================================
+   RESPONSIVE - Matching Donor Bank Pattern
+   ==================================================================
+   > 1024px      : Desktop (default styles above)
+   640-1024px    : Tablet LS + PT
+   < 640px       : Mobile LS + PT
+   < 380px       : Small mobile
+   ================================================================== */
+
+/* ------------------------------------------------------------------
+   TABLET (640px - 1024px)
+   Covers: Tablet Landscape + Tablet Portrait
+   ------------------------------------------------------------------ */
+@media (max-width: 1024px) {
+  .pageContainer { padding: 16px; }
+  .pageTitle { font-size: 24px; margin-bottom: 16px; }
+  .mainGrid { gap: 16px; }
+
+  /* Report buttons */
+  .reportTypeSection { padding: 12px 14px; border-radius: 12px; }
+  .sidebarTitle { font-size: 11px; margin-bottom: 10px; }
+  .reportTypeList { gap: 8px; }
+  .reportTypeBtn { padding: 8px 14px; font-size: 12px; border-radius: 10px; }
+  .reportBtnIcon { font-size: 13px; }
+
+  /* Search cards - 3 across compact */
+  .searchTitle { font-size: 11px; margin-bottom: 10px; }
+  .searchGrid { grid-template-columns: repeat(3, 1fr); gap: 2%; }
+  .searchCard { padding: 8px 3%; }
+  .searchCardIcon { width: 28px; height: 28px; font-size: 12px; border-radius: 6px; }
+  .searchCardHeader { margin-bottom: 8px; gap: 8px; }
+  .searchCardTitle { font-size: 12px; }
+  .searchCardSubtitle { font-size: 10px; }
+  .searchCardSeparator { margin-bottom: 8px; }
+  .searchCardInput { padding: 7px 8px; font-size: 12px; }
+  .searchCardBtn { padding: 7px 10px; font-size: 11px; }
+  .searchCardInputRow { gap: 6px; }
+  .activeSearchBar { padding: 8px 12px; margin-top: 10px; }
+  .activeSearchText { font-size: 12px; }
+
+  /* Config panel */
+  .configPanel { padding: 3%; border-radius: 12px; }
+  .panelTitle { font-size: 18px; margin-bottom: 14px; }
+  .sectionLabel { font-size: 12px; margin-bottom: 8px; }
+  .dateInput { padding: 8px 10px; font-size: 13px; width: 150px; }
+  .periodBtn { padding: 7px 12px; font-size: 12px; }
+
+  /* Filters: 2 columns */
+  .filterGrid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .filterLabel { font-size: 10px; }
+  .filterSelect { padding: 8px 28px 8px 10px; font-size: 13px; }
+
+  /* Generate full width */
+  .generateRow { justify-content: stretch; }
+  .generateBtn { width: 100%; justify-content: center; font-size: 13px; }
+
+  /* Stats: 4 across tighter */
+  .statsGrid { gap: 10px; }
+  .statCard { padding: 12px; }
+  .statNumber { font-size: 20px; }
+  .statLabel { font-size: 11px; }
+
+  /* Table scroll */
+  .tableCard { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 10px; }
+  .table { min-width: 650px; }
+  .tableHead th { padding: 10px 8px; font-size: 11px; }
+  .tableRow td { padding: 10px 8px; font-size: 12px; }
+
+  /* Download compact */
+  .downloadBtn { padding: 10px 18px; font-size: 13px; }
+
+  /* Empty */
+  .emptyState { padding: 32px 16px; }
+  .emptyIcon { font-size: 36px; }
+  .emptyText { font-size: 14px; }
+}
+
+/* ------------------------------------------------------------------
+   MOBILE (< 640px)
+   Covers: Mobile Portrait + Mobile Landscape
+   Stacked layout for clean full-width display
+   ------------------------------------------------------------------ */
+@media (max-width: 640px) {
+  .pageContainer { padding: 12px; }
+  .pageTitle { font-size: 20px; margin-bottom: 12px; }
+  .mainGrid { gap: 12px; }
+
+  /* Report buttons - small pills */
+  .reportTypeSection { padding: 10px 10px; border-radius: 10px; }
+  .sidebarTitle { font-size: 10px; margin-bottom: 8px; }
+  .reportTypeList { gap: 6px; }
+  .reportTypeBtn { padding: 7px 10px; font-size: 11px; border-radius: 8px; gap: 4px; }
+  .reportBtnIcon { font-size: 12px; }
+  .phaseBadge { font-size: 7px; padding: 1px 4px; }
+
+  /* Search cards - STACKED 1 column */
+  .searchTitle { font-size: 10px; margin-bottom: 8px; }
+  .searchGrid { grid-template-columns: 1fr; gap: 2%; }
+  .searchCard { padding: 8px 10px; border-radius: 10px; border-width: 1.5px; }
+  .searchCardIcon { width: 24px; height: 24px; font-size: 10px; border-radius: 6px; }
+  .searchCardHeader { margin-bottom: 6px; gap: 6px; }
+  .searchCardTitle { font-size: 12px; }
+  .searchCardSubtitle { font-size: 10px; }
+  .searchCardSeparator { margin-bottom: 6px; }
+  .searchCardInput { padding: 7px 10px; font-size: 12px; }
+  .searchCardBtn { padding: 7px 10px; font-size: 11px; }
+  .activeSearchBar { padding: 8px 10px; margin-top: 8px; border-radius: 8px; }
+  .activeSearchText { font-size: 11px; }
+  .activeSearchClear { padding: 3px 8px; font-size: 10px; }
+
+  /* Config panel */
+  .configPanel { padding: 3%; border-radius: 10px; }
+  .panelTitle { font-size: 16px; margin-bottom: 12px; gap: 6px; }
+  .sectionLabel { font-size: 11px; margin-bottom: 6px; }
+
+  /* Date: side by side tight */
+  .dateRow { gap: 6px; margin-bottom: 8px; }
+  .dateInput { flex: 1; width: auto; min-width: 100px; padding: 7px 6px; font-size: 12px; border-radius: 8px; }
+  .dateSeparator { font-size: 11px; }
+
+  /* Period */
+  .periodRow { gap: 4px; margin-bottom: 14px; }
+  .periodBtn { padding: 6px 10px; font-size: 11px; border-radius: 6px; }
+
+  /* Filters: STACKED 1 column */
+  .filterGrid { grid-template-columns: 1fr; gap: 8px; margin-bottom: 14px; }
+  .filterLabel { font-size: 9px; }
+  .filterSelect { padding: 8px 26px 8px 10px; font-size: 12px; border-radius: 8px; }
+
+  /* Generate */
+  .generateBtn { padding: 10px 16px; font-size: 12px; border-radius: 8px; }
+
+  /* Stats: 2x2 */
+  .statsGrid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .statCard { padding: 10px; border-radius: 8px; }
+  .statNumber { font-size: 16px; }
+  .statLabel { font-size: 9px; }
+
+  /* Table */
+  .table { min-width: 550px; }
+  .tableHead th { padding: 8px 6px; font-size: 10px; }
+  .tableRow td { padding: 8px 6px; font-size: 11px; }
+  .moreRows { padding: 8px; font-size: 11px; }
+
+  /* Download: stacked */
+  .downloadRow { flex-direction: column; gap: 8px; }
+  .downloadBtn { justify-content: center; padding: 10px 16px; font-size: 12px; }
+
+  /* Empty */
+  .emptyState { padding: 24px 12px; }
+  .emptyIcon { font-size: 32px; margin-bottom: 8px; }
+  .emptyText { font-size: 13px; }
+  .emptySubtext { font-size: 11px; }
+  .hmrcNote { font-size: 9px; }
+}
+
+/* ------------------------------------------------------------------
+   SMALL MOBILE (< 380px)
+   Extra tight for iPhone SE, Galaxy S mini
+   ------------------------------------------------------------------ */
+@media (max-width: 380px) {
+  .reportTypeBtn { padding: 6px 8px; font-size: 10px; gap: 3px; }
+  .phaseBadge { display: none; }
+  .searchCardSubtitle { display: none; }
+  .searchCardTitle { font-size: 11px; }
+  .periodBtn { padding: 5px 8px; font-size: 10px; }
+  .statNumber { font-size: 14px; }
+  .statLabel { font-size: 8px; }
+  .panelTitle { font-size: 15px; }
+  .dateInput { font-size: 11px; min-width: 85px; }
+}
