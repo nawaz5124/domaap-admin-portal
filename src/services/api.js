@@ -2,16 +2,21 @@
 // 🌐 API Client - Admin Portal (DOMAAP)
 // ===================================================================
 // Location: src/services/api.js
-// 
-// FIXED 2026-01-31:
-// - Use 'admin_access_token' cookie (separate from website)
-// - No conflicts with donation flow cookies
+//
+// PRODUCTION-READINESS PASS 2026-05-04:
+// - API_BASE_URL now env-driven (NEXT_PUBLIC_API_BASE_URL)
+// - Cookie clearing domains derived from API URL (no hardcoded ngrok)
+// - All console.* migrated to logger utility
 // ===================================================================
 
+import logger from '@/utils/logger';
+
 /**
- * API Base URL - Direct to Django backend via ngrok
+ * API Base URL - sourced from env, falls back to local dev backend.
+ * Set NEXT_PUBLIC_API_BASE_URL in .env.local (dev/stage) and Vercel (prod).
  */
-const API_BASE_URL = 'https://camelfoundation-domaap.ngrok.app/api';
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api';
 
 /**
  * Get cookie value by name
@@ -26,92 +31,99 @@ function getCookie(name) {
 
 /**
  * Get ADMIN access token from cookie
- * ✅ Uses 'admin_access_token' (different from website's 'access_token')
  */
 function getAccessToken() {
   return getCookie('admin_access_token');
 }
 
 /**
+ * Build the list of cookie-clearing domain attributes.
+ * Derives from API_BASE_URL so dev/stage/prod all self-adapt.
+ *   '' → current host (no domain attribute set)
+ *   '.host'  → e.g. .camelfoundation-domaap.ngrok.app
+ *   '.parent' → e.g. .ngrok.app  (only when 3+ labels)
+ */
+function getCookieDomains() {
+  const domains = [''];
+  try {
+    const { hostname } = new URL(API_BASE_URL);
+    domains.push(`.${hostname}`);
+    const parts = hostname.split('.');
+    if (parts.length > 2) {
+      domains.push(`.${parts.slice(-2).join('.')}`);
+    }
+  } catch {
+    /* malformed URL — current-host clear is best we can do */
+  }
+  return domains;
+}
+
+/**
  * Clear admin portal cookies (for logout or fresh login)
  */
 export function clearAdminCookies() {
-  const cookieDomains = [
-    '',
-    '.ngrok.app',
-    '.camelfoundation-domaap.ngrok.app',
-  ];
-  
+  const cookieDomains = getCookieDomains();
   const cookieNames = ['admin_access_token', 'admin_refresh_token'];
   const paths = ['/portal', '/'];
-  
-  cookieNames.forEach(name => {
-    paths.forEach(path => {
-      cookieDomains.forEach(domain => {
+
+  cookieNames.forEach((name) => {
+    paths.forEach((path) => {
+      cookieDomains.forEach((domain) => {
         const domainPart = domain ? `; domain=${domain}` : '';
         document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path}${domainPart}`;
       });
     });
   });
-  
-  console.log('🧹 [ADMIN API] Cleared admin auth cookies');
+
+  logger.debug('🧹 [ADMIN API] Cleared admin auth cookies');
 }
 
 /**
  * Make API request with authentication
- * @param {string} endpoint - API endpoint (e.g., '/admin/donors/stats/')
- * @param {object} options - Fetch options
- * @returns {Promise} - Response data
  */
 export async function apiRequest(endpoint, options = {}) {
   const url = `${API_BASE_URL}${endpoint}`;
-  
   const accessToken = getAccessToken();
-  
+
   const headers = {
     'Content-Type': 'application/json',
     ...options.headers,
   };
-  
-  // ✅ Attach admin access token if available
+
   if (accessToken) {
     headers['Authorization'] = `Bearer ${accessToken}`;
   }
-  
+
   const fetchOptions = {
     ...options,
     headers,
     credentials: 'include',
   };
-  
+
   try {
-    console.log(`🌐 [ADMIN API] Request: ${url}`);
-    
+    logger.debug(`🌐 [ADMIN API] Request: ${url}`);
+
     const response = await fetch(url, fetchOptions);
-    
-    console.log(`📡 [ADMIN API] Response: ${response.status}`);
-    
+
+    logger.debug(`📡 [ADMIN API] Response: ${response.status}`);
+
     if (response.status === 401) {
-      console.warn('⚠️ [ADMIN API] Unauthorized - attempting token refresh...');
-      
-      // Try to refresh token
+      logger.warn('⚠️ [ADMIN API] Unauthorized - attempting token refresh...');
+
       const refreshed = await refreshAdminToken();
-      
+
       if (refreshed) {
-        // Retry the original request
         const newAccessToken = getAccessToken();
         if (newAccessToken) {
           headers['Authorization'] = `Bearer ${newAccessToken}`;
         }
         const retryResponse = await fetch(url, { ...fetchOptions, headers });
-        
         if (retryResponse.ok) {
           return await retryResponse.json();
         }
       }
-      
-      // Refresh failed, redirect to login
-      console.error('❌ [ADMIN API] Token refresh failed - redirecting to login');
+
+      logger.error('❌ [ADMIN API] Token refresh failed - redirecting to login');
       if (typeof window !== 'undefined') {
         clearAdminCookies();
         localStorage.removeItem('user');
@@ -119,17 +131,15 @@ export async function apiRequest(endpoint, options = {}) {
       }
       throw new Error('Unauthorized');
     }
-    
+
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       throw new Error(errorData.error || errorData.detail || `API Error: ${response.status}`);
     }
-    
-    const data = await response.json();
-    return data;
-    
+
+    return await response.json();
   } catch (error) {
-    console.error(`❌ [ADMIN API] Request Failed: ${endpoint}`, error);
+    logger.error(`❌ [ADMIN API] Request failed: ${endpoint}`, error.message);
     throw error;
   }
 }
@@ -139,26 +149,23 @@ export async function apiRequest(endpoint, options = {}) {
  */
 async function refreshAdminToken() {
   try {
-    console.log('🔄 [ADMIN API] Refreshing admin token...');
-    
+    logger.debug('🔄 [ADMIN API] Refreshing admin token...');
+
     const response = await fetch(`${API_BASE_URL}/auth/admin-refresh/`, {
       method: 'POST',
       credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
     });
-    
+
     if (response.ok) {
-      console.log('✅ [ADMIN API] Token refreshed successfully');
+      logger.debug('✅ [ADMIN API] Token refreshed successfully');
       return true;
     }
-    
-    console.warn('❌ [ADMIN API] Token refresh returned:', response.status);
+
+    logger.warn('❌ [ADMIN API] Token refresh returned:', response.status);
     return false;
-    
   } catch (error) {
-    console.error('❌ [ADMIN API] Token refresh error:', error);
+    logger.error('❌ [ADMIN API] Token refresh error:', error.message);
     return false;
   }
 }
@@ -168,65 +175,43 @@ async function refreshAdminToken() {
  */
 export async function logout() {
   try {
-    // Call backend logout
     await fetch(`${API_BASE_URL}/auth/admin-logout/`, {
       method: 'POST',
       credentials: 'include',
     });
   } catch (e) {
-    console.warn('Logout API call failed:', e);
+    logger.warn('Logout API call failed:', e.message);
   }
-  
-  // Clear local data
+
   clearAdminCookies();
   localStorage.removeItem('user');
-  
-  // Redirect to login
+
   if (typeof window !== 'undefined') {
     window.location.href = '/portal/login';
   }
 }
 
-/**
- * GET request helper
- */
+/** GET request helper */
 export async function get(endpoint, params = {}) {
-  const queryString = Object.keys(params).length 
+  const queryString = Object.keys(params).length
     ? '?' + new URLSearchParams(params).toString()
     : '';
-  
-  return apiRequest(`${endpoint}${queryString}`, {
-    method: 'GET',
-  });
+  return apiRequest(`${endpoint}${queryString}`, { method: 'GET' });
 }
 
-/**
- * POST request helper
- */
+/** POST request helper */
 export async function post(endpoint, data = {}) {
-  return apiRequest(endpoint, {
-    method: 'POST',
-    body: JSON.stringify(data),
-  });
+  return apiRequest(endpoint, { method: 'POST', body: JSON.stringify(data) });
 }
 
-/**
- * PUT request helper
- */
+/** PUT request helper */
 export async function put(endpoint, data = {}) {
-  return apiRequest(endpoint, {
-    method: 'PUT',
-    body: JSON.stringify(data),
-  });
+  return apiRequest(endpoint, { method: 'PUT', body: JSON.stringify(data) });
 }
 
-/**
- * DELETE request helper
- */
+/** DELETE request helper */
 export async function del(endpoint) {
-  return apiRequest(endpoint, {
-    method: 'DELETE',
-  });
+  return apiRequest(endpoint, { method: 'DELETE' });
 }
 
 export default {
