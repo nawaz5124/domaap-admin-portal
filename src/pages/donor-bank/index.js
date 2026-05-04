@@ -18,9 +18,12 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import DonorSearchCards from '../../components/common/DonorSearchCards';
 import { getDonorStats, getDonorList } from '../../services/donorService';
+import { useComingSoon } from '../../context/ComingSoonContext';
+
 
 export default function DonorBank() {
   const router = useRouter();
+  const { showComingSoon } = useComingSoon();
 
   // ===================================================================
   // STATE
@@ -180,7 +183,7 @@ export default function DonorBank() {
           </span>
         </div>
         <button
-          onClick={() => router.push('/portal/donor/new')}
+           onClick={() => router.push('/donor/new')}
           style={{
             backgroundColor: '#22c55e',
             color: 'white',
@@ -199,7 +202,7 @@ export default function DonorBank() {
       </div>
 
       {/* ==================== SEARCH ==================== */}
-      <DonorSearchCards onSearch={handleSearch} loading={donorsLoading} variant="compact" />
+      <DonorSearchCards onSearch={handleSearch} variant="compact" />
 
       {searchQuery && (
         <div style={{
@@ -570,15 +573,41 @@ export default function DonorBank() {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
           <h3 style={{ fontSize: '16px', fontWeight: '600', color: '#1e3a5f', margin: 0 }}>{'\u26A1'} Quick Actions</h3>
-          <span style={{ backgroundColor: '#22c55e', color: 'white', padding: '2px 10px', borderRadius: '10px', fontSize: '11px', fontWeight: '600' }}>ENHANCED</span>
         </div>
         <div className="quick-actions-grid">
-          <button className="qa-btn green" onClick={() => window.location.href = '/portal/donor/new'}>{'\u2795'} <span>Add Donor</span></button>
-          <button className="qa-btn blue">{'\u2709\uFE0F'} <span>Email</span></button>
-          <button className="qa-btn yellow">{'\uD83D\uDCCA'} <span>Report</span></button>
-          <button className="qa-btn yellow">{'\uD83C\uDF9F\uFE0F'} <span>Receipts</span></button>
-          <button className="qa-btn orange">{'\uD83C\uDF81'} <span>Gift Aid</span></button>
-          <button className="qa-btn red">{'\uD83D\uDD14'} <span>Alerts</span> <em>3</em></button>
+          {[
+            { label: 'Add New Donor', icon: '\u2795', color: '#22c55e', bgColor: '#f0fdf4', borderColor: '#bbf7d0', href: '/donor/new' },
+            { label: 'Send Email', icon: '\u2709\uFE0F', color: '#3b82f6', bgColor: '#eff6ff', borderColor: '#bfdbfe', href: '/email' },
+            { label: 'Generate Report', icon: '\uD83D\uDCCB', color: '#f97316', bgColor: '#fff7ed', borderColor: '#fed7aa', href: '/reports' },
+            { label: 'Generate Receipts', icon: '\uD83E\uDDFE', color: '#ef4444', bgColor: '#fef2f2', borderColor: '#fecaca', comingSoon: 'receipts' },
+            { label: 'Gift Aid Claim', icon: '\uD83C\uDF81', color: '#ca8a04', bgColor: '#fefce8', borderColor: '#fef08a', comingSoon: 'giftAid' },
+            { label: 'View Alerts', icon: '\uD83D\uDD14', color: '#ef4444', bgColor: '#fef2f2', borderColor: '#fecaca', comingSoon: 'alerts' },
+          ].map((action, index) => (
+            <button
+              key={index}
+              onClick={() => action.href ? router.push(action.href) : showComingSoon(action.comingSoon)}
+              onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)'; }}
+              onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+              style={{
+                backgroundColor: action.bgColor,
+                border: `1px solid ${action.borderColor}`,
+                borderRadius: '10px',
+                padding: '14px 12px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                color: action.color,
+                fontWeight: '500',
+                fontSize: '13px',
+                transition: 'transform 0.2s, box-shadow 0.2s',
+              }}
+            >
+              <span>{action.icon}</span>
+              <span className="btn-text">{action.label}</span>
+            </button>
+          ))}
         </div>
       </div>
 

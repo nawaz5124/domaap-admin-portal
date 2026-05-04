@@ -9,6 +9,9 @@ import '@/styles/globals.css';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '@/components/common/Layout';
+import { ComingSoonProvider } from '@/context/ComingSoonContext';
+
+
 
 // ===================================================================
 // 📋 CONFIGURATION
@@ -112,9 +115,11 @@ export default function App({ Component, pageProps }) {
     <>
       {/* TODO: Add AuthProvider here */}
       {/* TODO: Add NotificationProvider here */}
-      <Layout activeMenu={activeMenu}>
-        <Component {...pageProps} />
-      </Layout>
+      <ComingSoonProvider>
+        <Layout activeMenu={activeMenu}>
+          <Component {...pageProps} />
+        </Layout>
+      </ComingSoonProvider>
     </>
   );
 }
