@@ -14,6 +14,7 @@
 // ===================================================================
 
 import api from './api';
+import logger from '@/utils/logger';
 
 
 // ===================================================================
@@ -103,7 +104,7 @@ export async function getReportPreview(params) {
       },
     };
   } catch (error) {
-    console.error('getReportPreview error:', error);
+    logger.error('getReportPreview failed', error.message);
     return {
       success: false,
       error: error.response?.data?.error || error.message || 'Failed to load report preview',
@@ -164,8 +165,9 @@ export async function downloadReport(params) {
 
     return { success: true, filename };
   } catch (error) {
-    console.error('downloadReport error:', error);
+    logger.error('downloadReport failed', error.message);
 
+    // If the response was a blob (error from API), try to read it
     // If the response was a blob (error from API), try to read it
     if (error.response?.data instanceof Blob) {
       try {
