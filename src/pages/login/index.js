@@ -10,11 +10,16 @@
 // - Mobile responsive design
 // ===================================================================
 
+
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import logger from '@/utils/logger';
 
-// API Base URL - Direct to Django backend via ngrok
-const API_BASE_URL = 'https://camelfoundation-domaap.ngrok.app/api';
+// API Base URL - sourced from env, falls back to local dev backend.
+// Set NEXT_PUBLIC_API_BASE_URL in .env.local (dev) and Vercel (prod).
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api';
 
 export default function Login() {
   const router = useRouter();
@@ -47,15 +52,15 @@ export default function Login() {
    */
   const clearCookiesOnLoad = async () => {
     try {
-      console.log('🧹 [LOGIN] Clearing stale cookies via backend...');
+      logger.debug('🧹 [LOGIN] Clearing stale cookies via backend...');
       await fetch(`${API_BASE_URL}/auth/clear-cookies/`, {
         method: 'POST',
         credentials: 'include',
       });
-      console.log('✅ [LOGIN] Cookies cleared successfully');
+      logger.debug('✅ [LOGIN] Cookies cleared successfully');
     } catch (err) {
       // Non-critical - just log and continue
-      console.warn('⚠️ [LOGIN] Could not clear cookies:', err);
+      logger.warn('⚠️ [LOGIN] Could not clear cookies:', err.message);
     }
     
     // Also clear localStorage
@@ -92,7 +97,7 @@ export default function Login() {
         ...(isEmail ? { email: identifier.trim() } : { username: identifier.trim() })
       };
 
-      console.log('🔐 [LOGIN] Attempting admin login...', { 
+      logger.debug('🔐 [LOGIN] Attempting admin login...', { 
         isEmail, 
         identifier: identifier.substring(0, 3) + '***' 
       });
@@ -106,31 +111,32 @@ export default function Login() {
         credentials: 'include',
       });
 
-      console.log('📡 [LOGIN] Response status:', response.status);
+      logger.debug('📡 [LOGIN] Response status:', response.status);
 
       // Handle non-JSON responses
       let data;
       try {
         data = await response.json();
       } catch (jsonError) {
-        console.error('❌ [LOGIN] Failed to parse response:', jsonError);
+        logger.error('❌ [LOGIN] Failed to parse response:', jsonError.message);
         setError('Server error. Please try again.');
         setIsLoading(false);
         return;
       }
 
-      console.log('📡 [LOGIN] Response data:', data);
-
       if (response.ok && data.success) {
-        console.log('✅ [LOGIN] Login successful!', data.user);
+        logger.debug('✅ [LOGIN] Login successful', { 
+          username: data.user?.username, 
+          role: data.user?.role 
+        });
         localStorage.setItem('user', JSON.stringify(data.user));
         router.push('/dashboard');
       } else {
-        console.log('❌ [LOGIN] Login failed:', data.error || data.detail || 'Unknown error');
+        logger.debug('❌ [LOGIN] Login failed:', data.error || data.detail || 'Unknown error');
         setError(data.error || data.detail || 'Login failed. Please try again.');
       }
     } catch (err) {
-      console.error('❌ [LOGIN] Network error:', err);
+      logger.error('❌ [LOGIN] Network error:', err.message);
       setError('Network error. Please check your connection.');
     } finally {
       setIsLoading(false);
