@@ -6,7 +6,7 @@
 // ===================================================================
 
 import { get, post, put } from './api';
-
+import logger from '@/utils/logger';
 /**
  * ============================================
  * DONOR STATS API
@@ -29,7 +29,7 @@ export async function getDonorStats() {
       }
     };
   } catch (error) {
-    console.error('getDonorStats error:', error);
+    logger.error('getDonorStats failed', error.message);
     return {
       success: false,
       error: error.message,
@@ -112,7 +112,7 @@ export async function getDonorList(params = {}) {
       }
     };
   } catch (error) {
-    console.error('getDonorList error:', error);
+    logger.error('getDonorList failed', error.message);
     return {
       success: false,
       error: error.message,
@@ -212,7 +212,7 @@ export async function getDonorDetail(cftNo) {
       }
     };
   } catch (error) {
-    console.error('getDonorDetail error:', error);
+    logger.error('getDonorDetail failed', error.message);
     return {
       success: false,
       error: error.message,
