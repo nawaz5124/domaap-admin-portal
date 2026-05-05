@@ -8,6 +8,9 @@
 // ===================================================================
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import logger from '@/utils/logger';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api';
 
 // ===================================================================
 // CREATE CONTEXT
@@ -34,9 +37,11 @@ export function DashboardProvider({ children }) {
       setLoading(true);
       setError(null);
 
-      // Use relative URL - nginx routes /api/* to Django backend
-      const response = await fetch('/api/admin/dashboard/', {
+      // Env-driven URL for cross-origin readiness;
+      // credentials: 'include' ensures JWT cookies are sent in prod (admin.* -> api.*)
+      const response = await fetch(`${API_BASE_URL}/admin/dashboard/`, {
         method: 'GET',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -58,7 +63,7 @@ export function DashboardProvider({ children }) {
       setDashboardData(data);
       setLastUpdated(new Date());
     } catch (err) {
-      console.error('Failed to fetch dashboard data:', err);
+      logger.error('Failed to fetch dashboard data', err.message);
       setError(err.message);
     } finally {
       setLoading(false);
