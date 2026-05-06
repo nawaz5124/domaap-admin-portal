@@ -6,6 +6,7 @@
 // ===================================================================
 
 import { get } from './api';
+import logger from '@/utils/logger';
 
 /**
  * ============================================
@@ -39,7 +40,7 @@ export async function getDonationStats(params = {}) {
       }
     };
   } catch (error) {
-    console.error('getDonationStats error:', error);
+    logger.error('getDonationStats failed', error.message);
     return {
       success: false,
       error: error.message,
@@ -154,7 +155,7 @@ export async function getDonationList(params = {}) {
       }
     };
   } catch (error) {
-    console.error('getDonationList error:', error);
+    logger.error('getDonationList failed', error.message);
     return {
       success: false,
       error: error.message,
@@ -185,7 +186,7 @@ export async function getDonationFilters() {
       }
     };
   } catch (error) {
-    console.error('getDonationFilters error:', error);
+    logger.error('getDonationFilters failed', error.message);
     return {
       success: false,
       error: error.message,
