@@ -7,7 +7,7 @@
 // ===================================================================
 
 import { get, post, put, del } from './api';
-
+import logger from '@/utils/logger';
 /**
  * ============================================
  * GET DONOR PROFILE
@@ -34,7 +34,7 @@ export async function getDonorProfile(cftNo) {
       data: data,
     };
   } catch (error) {
-    console.error('getDonorProfile error:', error);
+    logger.error('getDonorProfile failed', error.message);
     return {
       success: false,
       error: error.message || 'Failed to load donor profile',
@@ -79,7 +79,7 @@ export async function getDonorDonations(cftNo, params = {}) {
       data: data,
     };
   } catch (error) {
-    console.error('getDonorDonations error:', error);
+    logger.error('getDonorDonations failed', error.message);
     return {
       success: false,
       error: error.message || 'Failed to load donation history',
@@ -128,7 +128,7 @@ export async function createDonor(donorData) {
       data: data,
     };
   } catch (error) {
-    console.error('createDonor error:', error);
+    logger.error('createDonor failed', error.message);
     return {
       success: false,
       error: error.message || 'Failed to create donor',
@@ -171,7 +171,7 @@ export async function updateDonor(cftNo, donorData) {
       data: data,
     };
   } catch (error) {
-    console.error('updateDonor error:', error);
+    logger.error('updateDonor failed', error.message);
     return {
       success: false,
       error: error.message || 'Failed to update donor',
@@ -195,7 +195,7 @@ export async function deleteDonor(cftNo) {
       data: data,
     };
   } catch (error) {
-    console.error('deleteDonor error:', error);
+    logger.error('deleteDonor failed', error.message);
     return {
       success: false,
       error: error.message || 'Failed to delete donor',
@@ -219,7 +219,7 @@ export async function getDonorStats() {
       data: data,
     };
   } catch (error) {
-    console.error('getDonorStats error:', error);
+    logger.error('getDonorStats failed', error.message);
     return {
       success: false,
       error: error.message || 'Failed to load stats',
@@ -243,7 +243,7 @@ export async function getDonorsList(params = {}) {
       data: data,
     };
   } catch (error) {
-    console.error('getDonorsList error:', error);
+    logger.error('getDonorsList failed', error.message);
     return {
       success: false,
       error: error.message || 'Failed to load donors',

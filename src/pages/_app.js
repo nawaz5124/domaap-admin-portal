@@ -9,6 +9,10 @@ import '@/styles/globals.css';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '@/components/common/Layout';
+import { ComingSoonProvider } from '@/context/ComingSoonContext';
+import logger from '@/utils/logger';
+
+
 
 // ===================================================================
 // 📋 CONFIGURATION
@@ -87,7 +91,7 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
-    console.log('🚀 Admin Portal Loaded - Bismillah');
+    logger.debug('🚀 Admin Portal Loaded - Bismillah');
   }, []);
 
   // Check if current page is public (no Layout needed)
@@ -112,9 +116,11 @@ export default function App({ Component, pageProps }) {
     <>
       {/* TODO: Add AuthProvider here */}
       {/* TODO: Add NotificationProvider here */}
-      <Layout activeMenu={activeMenu}>
-        <Component {...pageProps} />
-      </Layout>
+      <ComingSoonProvider>
+        <Layout activeMenu={activeMenu}>
+          <Component {...pageProps} />
+        </Layout>
+      </ComingSoonProvider>
     </>
   );
 }

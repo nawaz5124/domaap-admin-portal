@@ -287,22 +287,10 @@ export default function AddNewDonor() {
               <span>✅</span> Consent & Preferences
             </h3>
             
-            <label className="checkbox-group">
-              <input
-                type="checkbox"
-                name="consentGDPR"
-                checked={formData.consentGDPR}
-                onChange={handleChange}
-                className="checkbox"
-              />
-              <div>
-                <div className="checkbox-label">GDPR Consent</div>
-                <div className="checkbox-hint">I consent to the processing of my personal data</div>
-              </div>
-            </label>
+
 
             <div className="info-box">
-              <p>ℹ️ <strong>Note:</strong> Gift Aid Declaration and CFT Fund Consent are captured at the time of each donation, not during donor registration.</p>
+              <p>ℹ️ <strong>Note:</strong> Gift Aid and CFT Fund consent can also be updated on individual donations.</p>
             </div>
           </div>
 

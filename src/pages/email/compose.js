@@ -27,6 +27,7 @@ import {
   getGroupRecipients,
   sendGroupEmail,
 } from '@/services/emailService';
+import logger from '@/utils/logger';
 import styles from './compose.module.css';
 
 // ============================================================
@@ -260,7 +261,7 @@ export default function ComposeEmailPage() {
           setGroupDonors(res.donors);
         }
       } catch (err) {
-        console.error('Group count error:', err);
+        logger.error('Group count fetch failed', err.message);
         setGroupCount(null);
         setGroupDonors([]);
       }

@@ -19,6 +19,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Sidebar from './Sidebar';
+import logger from '@/utils/logger';
+import { logout } from '@/services/api';
 
 export default function Layout({ children, activeMenu }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -40,11 +42,11 @@ export default function Layout({ children, activeMenu }) {
           setUser(JSON.parse(storedUser));
           setIsLoading(false);
         } else {
-          console.log('🔐 No user found, redirecting to login...');
+          logger.debug('🔐 No user found, redirecting to login...');
           router.push('/login');
         }
       } catch (error) {
-        console.error('Auth check error:', error);
+        logger.error('Auth check failed', error.message);
         router.push('/login');
       }
     };
@@ -100,21 +102,10 @@ export default function Layout({ children, activeMenu }) {
   // 🚪 Logout Function
   // ===================================================================
   const handleLogout = async () => {
-    try {
-      console.log('🚪 Logging out...');
-      
-      await fetch('/api/auth/logout/', {
-        method: 'GET',
-        credentials: 'include',
-      });
-      
-      localStorage.removeItem('user');
-      router.push('/login');
-    } catch (error) {
-      console.error('Logout error:', error);
-      localStorage.removeItem('user');
-      router.push('/login');
-    }
+    logger.debug('🚪 Logging out...');
+    await logout();
+    // logout() handles: POST to /auth/admin-logout/, cookie cleanup,
+    // localStorage cleanup, and full-page redirect to /portal/login.
   };
 
   const handleOverlayClick = useCallback(() => {
