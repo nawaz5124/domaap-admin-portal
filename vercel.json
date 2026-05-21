@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/portal/login",
+      "permanent": false
+    }
+  ]
+}
