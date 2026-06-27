@@ -116,7 +116,8 @@ export async function createDonor(donorData) {
       city: donorData.city || '',
       county: donorData.county || '',
       postCode: donorData.postCode || '',
-      gdprConsent: donorData.gdprConsent || donorData.consentGDPR || false,
+      // TD-085 CONSENT-DECOUPLE: stopped sending gdprConsent on create so backend records NULL (model default=None, migration 0027). Paired with backend :307.
+      // gdprConsent: donorData.gdprConsent || donorData.consentGDPR || false,
       getUpdates: donorData.getUpdates || false,
       volunteer: donorData.volunteer || false,
     };
@@ -159,7 +160,8 @@ export async function updateDonor(cftNo, donorData) {
       city: donorData.city,
       county: donorData.county,
       postCode: donorData.postCode,
-      gdprConsent: donorData.gdprConsent || donorData.consentGDPR,
+      // TD-085 CONSENT-DECOUPLE: stopped sending gdprConsent on update — no GDPR UI sends this; prevents accidental overwrite. Paired with backend :350.
+      // gdprConsent: donorData.gdprConsent || donorData.consentGDPR,
       getUpdates: donorData.getUpdates,
       volunteer: donorData.volunteer,
     };
