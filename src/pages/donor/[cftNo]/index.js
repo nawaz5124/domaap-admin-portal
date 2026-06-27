@@ -72,13 +72,15 @@ export default function DonorProfile() {
   // ===================================================================
   // COMPUTED VALUES
   // ===================================================================
-  const isProfileComplete = donor?.consentGDPR && donor?.consentGiftAid && donor?.consentCFT;
+  // TD-085 CONSENT-DECOUPLE: GDPR + CFT removed from profile-completeness, covered by T&Cs. Gift Aid retained (per-transaction HMRC declaration).
+  const isProfileComplete = donor?.consentGiftAid;
   
   const missingConsents = [];
-  if (donor && !donor.consentCFT) missingConsents.push('Consent for CFT fund');
+  // TD-085 CONSENT-DECOUPLE: GDPR + CFT no longer flagged as missing. Gift Aid retained.
+  // if (donor && !donor.consentCFT) missingConsents.push('Consent for CFT fund');  // TD-085 CONSENT-DECOUPLE
   if (donor && !donor.consentGiftAid) missingConsents.push('Gift Aid Declaration');
-  if (donor && !donor.consentGDPR) missingConsents.push('GDPR Consent');
-
+  // if (donor && !donor.consentGDPR) missingConsents.push('GDPR Consent');  // TD-085 CONSENT-DECOUPLE
+  
   // ===================================================================
   // RENDER
   // ===================================================================
@@ -247,24 +249,28 @@ export default function DonorProfile() {
               <tr><td className="th">Mobile</td><td className="td">{donor.mobile || '-'}</td></tr>
 
               {/* Consent */}
-              <tr>
-                <td className="th">Consent for GDPR</td>
-                <td className="td">
-                  {donor.consentGDPR ? <span className="consent-yes">✅ Yes</span> : <span className="consent-no">❌ No</span>}
-                </td>
-              </tr>
+              {/* ===== TD-085 CONSENT-DECOUPLE START — GDPR consent row removed =====
+                // <tr>
+                //   <td className="th">Consent for GDPR</td>
+                //   <td className="td">
+                //     {donor.consentGDPR ? <span className="consent-yes">✅ Yes</span> : <span className="consent-no">❌ No</span>}
+                //   </td>
+                // </tr>
+              ===== TD-085 CONSENT-DECOUPLE END ===== */}
               <tr>
                 <td className="th">Consent for Gift Aid</td>
                 <td className="td">
                   {donor.consentGiftAid ? <span className="consent-yes">✅ Yes</span> : <span className="consent-no">❌ No</span>}
                 </td>
               </tr>
-              <tr>
-                <td className="th">Consent for CFT fund</td>
-                <td className="td">
-                  {donor.consentCFT ? <span className="consent-yes">✅ Yes</span> : <span className="consent-no">❌ No ❗</span>}
-                </td>
-              </tr>
+              {/* ===== TD-085 CONSENT-DECOUPLE START — CFT fund consent row removed =====
+                // <tr>
+                //   <td className="th">Consent for CFT fund</td>
+                //   <td className="td">
+                //     {donor.consentCFT ? <span className="consent-yes">✅ Yes</span> : <span className="consent-no">❌ No ❗</span>}
+                //   </td>
+                // </tr>
+              ===== TD-085 CONSENT-DECOUPLE END ===== */}
 
               {/* Donation Profile Link */}
               <tr>
