@@ -253,17 +253,13 @@ export default function DonorProfileSearch() {
 
     // From detail API (flat camelCase response, null until loaded)
     // API returns: { cftNo, firstName, lastName, fullName, address: { houseNo, street, city, postCode },
-    //   consentGDPR, consentGiftAid, consentCFT, totalDonated, giftAidTotal, memberSince,
+    //   consentGiftAid, totalDonated, giftAidTotal, memberSince,
     //   lastDonation, createdAt, updatedAt, isDirectDebitor, isPremium, ddAmount, ddFrequency }
     address: donorDetail?.address
       ? `${donorDetail.address.houseNo || ''} ${donorDetail.address.street || ''}, ${donorDetail.address.city || ''}, ${donorDetail.address.postCode || ''}`.replace(/^[\s,]+|[\s,]+$/g, '')
       : selectedDonor.postcode || '-',
     memberSince: donorDetail?.memberSince || null,
-    // TD-085 CONSENT-DECOUPLE: gdprConsent removed — front-end no longer reads GDPR consent.
-    // gdprConsent: donorDetail?.consentGDPR ?? null,
     giftAidConsent: donorDetail?.consentGiftAid ?? null,
-    // TD-085 CONSENT-DECOUPLE: consentCFT removed — front-end no longer reads CFT fund consent.
-    // consentCFT: donorDetail?.consentCFT ?? null,
     giftAid: donorDetail?.giftAidTotal || null,
     activeDD: donorDetail?.isDirectDebitor
       ? `${donorDetail.ddAmount} / ${donorDetail.ddFrequency}`
@@ -480,26 +476,17 @@ export default function DonorProfileSearch() {
                 </div>
 
                 <div>
-                  {/* TD-085 CONSENT-DECOUPLE: heading gate switched from gdprConsent to giftAidConsent (GDPR/CFT decoupled, Gift Aid retained). */}
                   <h4 className={styles.detailHeading}>{'\u2705'} {preview.giftAidConsent != null ? 'Consent Status' : 'Flags'}</h4>
                   <div className={styles.detailList}>
                     {preview.giftAidConsent != null ? (
                       <>
                         {[
-                          // TD-085 CONSENT-DECOUPLE: GDPR + CFT consent rows removed — Gift Aid retained.
-                          // { label: 'GDPR Consent', value: preview.gdprConsent },
                           { label: 'Gift Aid', value: preview.giftAidConsent },
-                          // { label: 'CFT Fund', value: preview.consentCFT },  // TD-085 CONSENT-DECOUPLE
                         ].map((consent, idx) => (
                           <div key={idx} className={styles.consentRow}>
                             <span className={`${styles.consentBadge} ${consent.value ? styles.consentYes : styles.consentNo}`}>
                               {consent.value ? '\u2713' : '\u2717'} {consent.label}
                             </span>
-                            {/* TD-085 CONSENT-DECOUPLE: CFT Fund warning removed — no CFT row in map anymore.
-                            {!consent.value && consent.label === 'CFT Fund' && (
-                              <span>{'\u26A0\uFE0F'}</span>
-                            )}
-                            */}
                           </div>
                         ))}
                       </>

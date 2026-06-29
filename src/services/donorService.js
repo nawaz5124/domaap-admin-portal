@@ -158,8 +158,6 @@ export async function getDonorDetail(cftNo) {
       },
       volunteer: data.donor.volunteer,
       getUpdates: data.donor.get_updates,
-      // TD-085 CONSENT-DECOUPLE: gdpr_consent — front-end no longer reads consent from API (donor-profile null-guards ?? null handle absence).
-      // gdprConsent: data.donor.gdpr_consent,  // TD-085 CONSENT-DECOUPLE
       source: data.donor.source,
       referralMessage: data.donor.referral_message,
       createdAt: data.donor.created_at,

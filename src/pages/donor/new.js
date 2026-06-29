@@ -32,8 +32,6 @@ export default function AddNewDonor() {
     city: '',
     county: '',
     postCode: '',
-    // TD-085 CONSENT-DECOUPLE: consentGDPR removed from form state — no GDPR UI exists; backend records NULL (pair with backend :307 default fix).
-    // consentGDPR: false,
   });
 
   // Validation errors
@@ -93,8 +91,6 @@ export default function AddNewDonor() {
       city: formData.city,
       county: formData.county,
       postCode: formData.postCode,
-      // TD-085 CONSENT-DECOUPLE: stopped sending consentGDPR so backend records NULL (pair with backend :307 default fix).
-      // consentGDPR: formData.consentGDPR,
     });
     
     if (result.success) {
