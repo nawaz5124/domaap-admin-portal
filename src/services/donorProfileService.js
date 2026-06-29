@@ -18,7 +18,7 @@ import logger from '@/utils/logger';
  * {
  *   cftNo, firstName, lastName, fullName, email, mobile,
  *   address: { houseNo, street, city, county, postCode },
- *   consentGDPR, consentGiftAid, consentCFT,
+ *   consentGiftAid
  *   status, isDirectDebitor, isPremium, ddAmount, ddFrequency,
  *   totalDonated, donationCount, giftAidTotal,
  *   memberSince, lastDonation, ...
@@ -100,7 +100,7 @@ export async function getDonorDonations(cftNo, params = {}) {
  * POST /api/admin/donors/create/
  * 
  * Backend expects camelCase:
- * { firstName, lastName, email, mobile, firstLine, street, city, county, postCode, gdprConsent, ... }
+ * { firstName, lastName, email, mobile, firstLine, street, city, county, postCode, ... }
  */
 export async function createDonor(donorData) {
   try {
@@ -116,8 +116,6 @@ export async function createDonor(donorData) {
       city: donorData.city || '',
       county: donorData.county || '',
       postCode: donorData.postCode || '',
-      // TD-085 CONSENT-DECOUPLE: stopped sending gdprConsent on create so backend records NULL (model default=None, migration 0027). Paired with backend :307.
-      // gdprConsent: donorData.gdprConsent || donorData.consentGDPR || false,
       getUpdates: donorData.getUpdates || false,
       volunteer: donorData.volunteer || false,
     };
@@ -160,8 +158,6 @@ export async function updateDonor(cftNo, donorData) {
       city: donorData.city,
       county: donorData.county,
       postCode: donorData.postCode,
-      // TD-085 CONSENT-DECOUPLE: stopped sending gdprConsent on update — no GDPR UI sends this; prevents accidental overwrite. Paired with backend :350.
-      // gdprConsent: donorData.gdprConsent || donorData.consentGDPR,
       getUpdates: donorData.getUpdates,
       volunteer: donorData.volunteer,
     };
