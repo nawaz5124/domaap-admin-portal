@@ -35,7 +35,7 @@ export default function DonationBook() {
   const [donationsLoading, setDonationsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [filterOptions, setFilterOptions] = useState({ causes: [], paymentModes: [] });
+  const [filterOptions, setFilterOptions] = useState({ paymentModes: [] }); // [TD-101] causes[] removed
 
   const [pagination, setPagination] = useState({
     total: 0, page: 1, pageSize: 10, totalPages: 1,
@@ -43,15 +43,15 @@ export default function DonationBook() {
 
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [selectedCause, setSelectedCause] = useState('');
+  // [TD-101] 16Jul26: Cause filter state removed — cause-era UI cleanup (legacy campaign data; remaining cause surfaces die with TD-099)
   const [selectedFrequency, setSelectedFrequency] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('date');
   const [sortOrder, setSortOrder] = useState('desc');
 
-  // Derived values
-  const hasActiveFilters = startDate || endDate || selectedCause || selectedFrequency || searchQuery;
-  const activeFilterCount = [startDate, endDate, selectedCause, selectedFrequency, searchQuery].filter(Boolean).length;
+  // [TD-101] Cause removed from filter derivations
+  const hasActiveFilters = startDate || endDate || selectedFrequency || searchQuery;
+  const activeFilterCount = [startDate, endDate, selectedFrequency, searchQuery].filter(Boolean).length;
 
   // ===================================================================
   // DATA FETCHING
@@ -84,7 +84,7 @@ export default function DonationBook() {
     const result = await getDonationList({
       page: pagination.page, pageSize: pagination.pageSize,
       startDate: startDate || undefined, endDate: endDate || undefined,
-      cause: selectedCause || undefined, frequency: selectedFrequency || undefined,
+      frequency: selectedFrequency || undefined, // [TD-101] Cause param removed
       search: searchQuery || undefined, sortBy, sortOrder,
     });
     if (result.success) {
@@ -94,7 +94,7 @@ export default function DonationBook() {
       setError(result.error);
     }
     setDonationsLoading(false);
-  }, [pagination.page, pagination.pageSize, startDate, endDate, selectedCause, selectedFrequency, searchQuery, sortBy, sortOrder]);
+  }, [pagination.page, pagination.pageSize, startDate, endDate, selectedFrequency, searchQuery, sortBy, sortOrder]);
 
   useEffect(() => { fetchDonations(); }, [fetchDonations]);
 
@@ -121,7 +121,7 @@ export default function DonationBook() {
   const resetPage = () => setPagination(prev => ({ ...prev, page: 1 }));
 
   const handleClearFilters = () => {
-    setStartDate(''); setEndDate(''); setSelectedCause('');
+    setStartDate(''); setEndDate(''); // [TD-101] Cause clear removed
     setSelectedFrequency(''); setSearchQuery(''); resetPage();
   };
 
@@ -147,16 +147,7 @@ export default function DonationBook() {
       value: endDate,
       onChange: (val) => { setEndDate(val); resetPage(); },
     },
-    {
-      type: 'select',
-      value: selectedCause,
-      onChange: (val) => { setSelectedCause(val); resetPage(); },
-      placeholder: 'All Causes',
-      options: filterOptions.causes.map((c) => ({
-        value: c,
-        label: c.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-      })),
-    },
+        // [TD-101] Cause filter dropdown removed (legacy campaign data; Type filter = later controlled change)
     {
       type: 'select',
       value: selectedFrequency,
@@ -181,7 +172,7 @@ export default function DonationBook() {
       <div className={styles.filterTags}>
         {startDate && <span className={styles.filterTag}>From: {startDate}</span>}
         {endDate && <span className={styles.filterTag}>To: {endDate}</span>}
-        {selectedCause && <span className={styles.filterTag}>Cause: {selectedCause.replace(/_/g, ' ')}</span>}
+        {/* [TD-101] Cause filter tag removed */}
         {selectedFrequency && <span className={styles.filterTag}>Freq: {selectedFrequency === 'one_off' ? 'One-off' : 'Recurring'}</span>}
       </div>
     </div>
@@ -283,9 +274,7 @@ export default function DonationBook() {
                   Donor {renderSortIcon('donor')}
                 </th>
                 <th className={styles.colP3}>Type</th>
-                <th className={styles.sortable} onClick={() => handleSort('cause')}>
-                  Cause {renderSortIcon('cause')}
-                </th>
+                {/* [TD-101] Cause column header removed */}
                 <th className={styles.colP2}>Freq</th>
                 <th className={`${styles.colGiftaid} ${styles.colP2}`}>Gift Aid</th>
                 <th className={`${styles.colAmount} ${styles.sortable}`} onClick={() => handleSort('amount')}>
@@ -302,7 +291,7 @@ export default function DonationBook() {
                     <td><div className={styles.skeletonCell} /></td>
                     <td><div className={styles.skeletonCell} /></td>
                     <td className={styles.colP3}><div className={styles.skeletonCell} /></td>
-                    <td><div className={styles.skeletonCell} /></td>
+                    {/* [TD-101] Cause skeleton cell removed */}
                     <td className={styles.colP2}><div className={styles.skeletonCell} /></td>
                     <td className={styles.colP2}><div className={styles.skeletonCell} /></td>
                     <td><div className={styles.skeletonCell} /></td>
@@ -311,7 +300,7 @@ export default function DonationBook() {
                 ))
               ) : donations.length === 0 ? (
                 <tr>
-                  <td colSpan="9" className={styles.emptyState}>
+                  <td colSpan="8" className={styles.emptyState}> {/* [TD-101] 9→8, Cause column removed */}
                     <div className={styles.emptyIcon}>{'\uD83D\uDCD6'}</div>
                     <div className={styles.emptyTitle}>No donations found</div>
                     <div className={styles.emptySubtitle}>
@@ -350,7 +339,7 @@ export default function DonationBook() {
                         {donation.type}
                       </span>
                     </td>
-                    <td>{donation.cause}</td>
+                    {/* [TD-101] Cause cell removed */}
                     <td className={styles.colP2}>
                       <span
                         className={styles.badge}

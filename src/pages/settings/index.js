@@ -57,10 +57,10 @@ export default function Settings() {
       id: 'donations',
       icon: '🎁',
       title: 'Donation Settings',
-      description: 'Fund types, causes, Gift Aid settings',
+      description: 'Fund types, Gift Aid settings', // [TD-101] causes wording removed
       status: 'coming-soon',
       color: '#ec4899',
-      items: ['Fund Types (Zakat, Sadaqah, Lillah)', 'Causes/Projects', 'Gift Aid Rate', 'Receipt Settings']
+      items: ['Fund Types (Zakat, Sadaqah, Lillah)', 'Gift Aid Rate', 'Receipt Settings'] // [TD-101] Causes/Projects item removed
     },
     {
       id: 'notifications',

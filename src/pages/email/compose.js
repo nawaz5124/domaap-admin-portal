@@ -54,6 +54,7 @@ const FUND_TYPE_OPTIONS = [
   { value: 'zakat', label: 'Zakat' },
 ];
 
+// [TD-101] KEPT deliberately — legacy cause segmentation for email audiences (backend twin: admin_email_service causes filter); retires with TD-099 drop-column
 const CAUSE_OPTIONS = [
   { value: 'sponsoring_child', label: 'Sponsoring a Child' },
   { value: 'building_institutions', label: 'Building Institutions' },
