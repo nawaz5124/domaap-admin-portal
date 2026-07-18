@@ -189,8 +189,7 @@ export async function getDonorDetail(cftNo) {
       currency: donation.currency,
       type: donation.type,
       typeDisplay: capitalizeFirst(donation.type),
-      cause: donation.cause,
-      causeDisplay: formatCause(donation.cause),
+      // [TD-101] cause + causeDisplay mapping removed (last consumer was Donor Profile render)
       frequency: donation.frequency,
       status: donation.status,
       statusColor: getStatusColor(donation.status),
@@ -304,16 +303,7 @@ function capitalizeFirst(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-/**
- * Format cause (snake_case to Title Case)
- */
-function formatCause(cause) {
-  if (!cause) return '';
-  return cause
-    .split('_')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
+// [TD-101] formatCause helper removed (orphaned after cause mapping cut)
 
 // ===================================================================
 // EXPORTS

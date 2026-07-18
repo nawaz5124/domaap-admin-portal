@@ -446,7 +446,7 @@
 
 .donationRow {
   display: grid;
-  grid-template-columns: 90px 80px 1fr 80px;
+  grid-template-columns: 90px 1fr 80px; /* [TD-101] 4→3 tracks, cause column removed */
   gap: 8px;
   padding: 8px 0;
   border-bottom: 1px solid #f3f4f6;
@@ -468,9 +468,7 @@
   color: #1e3a5f;
 }
 
-.donationCause {
-  color: #374151;
-}
+/* [TD-101] .donationCause removed */
 
 .donationStatus {
   text-align: right;
@@ -807,7 +805,7 @@
 
   /* Recent donations: compact */
   .donationRow {
-    grid-template-columns: 70px 65px 1fr 65px;
+    grid-template-columns: 70px 1fr 65px; /* [TD-101] 4→3 tracks, cause column removed */
     gap: 4px;
     font-size: 11px;
   }

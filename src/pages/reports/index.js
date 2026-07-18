@@ -83,8 +83,8 @@ export default function Reports() {
     'donation': {
       title: 'Donation Report',
       icon: '📊',
-      showFilters: ['paymentMode', 'fundType', 'cause', 'frequency', 'status', 'giftAid'],
-      columns: ['cftNo', 'donorName', 'paymentMode', 'fundType', 'cause', 'date', 'amount', 'giftAid'],
+      showFilters: ['paymentMode', 'fundType', 'frequency', 'status', 'giftAid'], // [TD-101] cause filter removed
+      columns: ['cftNo', 'donorName', 'paymentMode', 'fundType', 'date', 'amount', 'giftAid'], // [TD-101] cause column removed
       showHmrc: false,
     },
     'donor-book': {
@@ -97,7 +97,7 @@ export default function Reports() {
     'gift-aid': {
       title: 'Gift Aid Report',
       icon: '🎁',
-      showFilters: ['fundType', 'cause', 'status'],
+      showFilters: ['fundType', 'status'], // [TD-101] cause filter removed
       columns: ['cftNo', 'donorName', 'address', 'postcode', 'date', 'amount', 'giftAid'],
       showHmrc: true,
     },
@@ -111,7 +111,7 @@ export default function Reports() {
     donorName:   { label: 'Donor Name',   align: 'left' },
     paymentMode: { label: 'Payment Mode', align: 'left' },
     fundType:    { label: 'Fund Type',    align: 'left' },
-    cause:       { label: 'Cause',        align: 'left' },
+    // [TD-101] cause columnDef removed
     date:        { label: 'Date',         align: 'left' },
     amount:      { label: 'Amount',       align: 'right' },
     giftAid:     { label: 'Gift Aid',     align: 'center' },
@@ -132,9 +132,9 @@ export default function Reports() {
   const [activePeriod, setActivePeriod] = useState('this-tax-year');
 
   // 7 Filters
+  // 6 Filters ([TD-101] cause filter state removed)
   const [paymentMode, setPaymentMode] = useState('all');
   const [fundType, setFundType] = useState('all');
-  const [cause, setCause] = useState('all');
   const [frequency, setFrequency] = useState('all');
   const [status, setStatus] = useState('all');
   const [giftAid, setGiftAid] = useState('all');
@@ -160,8 +160,7 @@ export default function Reports() {
     setSelectedReport(reportId);
     // Reset all filters to 'all'
     setPaymentMode('all');
-    setFundType('all');
-    setCause('all');
+    setFundType('all'); // [TD-101] cause reset removed
     setFrequency('all');
     setStatus('all');
     setGiftAid('all');
@@ -281,14 +280,10 @@ export default function Reports() {
       { value: 'all', label: 'All Fund Types' },
       { value: 'Sadaqah', label: 'Sadaqah' },
       { value: 'Lillah', label: 'Lillah' },
-      { value: 'Other', label: 'Other' },
+      // [TD-101] 'Other' option removed (backend returns qs.none() for it; Zakat option = parked addition)
     ],
-    cause: [
-      { value: 'all', label: 'All Causes' },
-      { value: 'building_institutions', label: 'Building of Institutions' },
-      { value: 'sponsor_child', label: 'Sponsor a Child' },
-      { value: 'where_most_needed', label: 'Where Most Needed' },
-    ],
+        // [TD-101] cause options removed (keys were stale vs real data anyway)
+
     frequency: [
       { value: 'all', label: 'All Frequencies' },
       { value: 'One-Off', label: 'One-Off' },
@@ -311,8 +306,7 @@ export default function Reports() {
 
   const filterSetters = {
     paymentMode: setPaymentMode,
-    fundType: setFundType,
-    cause: setCause,
+    fundType: setFundType, // [TD-101] cause setter removed
     frequency: setFrequency,
     status: setStatus,
     giftAid: setGiftAid,
@@ -320,8 +314,7 @@ export default function Reports() {
 
   const filterValues = {
     paymentMode,
-    fundType,
-    cause,
+    fundType, // [TD-101] cause value removed
     frequency,
     status,
     giftAid,
@@ -335,8 +328,7 @@ export default function Reports() {
     startDate,
     endDate,
     paymentMode,
-    fundType,
-    cause,
+    fundType, // [TD-101] cause param removed
     frequency,
     status,
     giftAid,
@@ -669,7 +661,7 @@ export default function Reports() {
                     <span className={styles.filterLabel}>
                       {filterKey === 'paymentMode' && 'Payment Method'}
                       {filterKey === 'fundType' && 'Fund Type'}
-                      {filterKey === 'cause' && 'Cause'}
+                      {/* [TD-101] cause label removed */}
                       {filterKey === 'frequency' && 'Frequency'}
                       {filterKey === 'status' && 'Status'}
                       {filterKey === 'giftAid' && 'Gift Aid'}

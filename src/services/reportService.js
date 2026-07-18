@@ -40,9 +40,7 @@ function buildQueryString(params) {
   if (params.fundType && params.fundType !== 'all') {
     qp.append('fund_type', params.fundType);
   }
-  if (params.cause && params.cause !== 'all') {
-    qp.append('cause', params.cause);
-  }
+  // [TD-101] cause query param removed
   if (params.frequency && params.frequency !== 'all') {
     qp.append('frequency', params.frequency);
   }
