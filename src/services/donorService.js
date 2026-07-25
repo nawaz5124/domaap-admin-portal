@@ -189,7 +189,6 @@ export async function getDonorDetail(cftNo) {
       currency: donation.currency,
       type: donation.type,
       typeDisplay: capitalizeFirst(donation.type),
-      // [TD-101] cause + causeDisplay mapping removed (last consumer was Donor Profile render)
       frequency: donation.frequency,
       status: donation.status,
       statusColor: getStatusColor(donation.status),
@@ -303,7 +302,6 @@ function capitalizeFirst(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// [TD-101] formatCause helper removed (orphaned after cause mapping cut)
 
 // ===================================================================
 // EXPORTS
