@@ -573,13 +573,11 @@ export default function DonorProfileSearch() {
                     {preview.recentDonations.map((donation, idx) => {
                       const date = donation.date || donation.created_at || '-';
                       const amount = donation.amount || donation.formatted_amount || '-';
-                      // [TD-101] cause const removed
                       const status = donation.status || donation.payment_status || 'pending';
                       return (
                         <div key={idx} className={styles.donationRow}>
                           <span className={styles.donationDate}>{date}</span>
                           <span className={styles.donationAmount}>{amount}</span>
-                          {/* [TD-101] Cause span removed */}
                           <span className={styles.donationStatus}>
                             <span
                               className={styles.donationStatusBadge}

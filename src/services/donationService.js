@@ -66,7 +66,6 @@ export async function getDonationStats(params = {}) {
  * @param {number} params.pageSize - Items per page (default: 25)
  * @param {string} params.startDate - Filter start date (YYYY-MM-DD)
  * @param {string} params.endDate - Filter end date (YYYY-MM-DD)
- * [TD-101] cause param removed
  * @param {string} params.frequency - Filter by frequency (one_off, recurring)
  * @param {string} params.search - Search term
  * @param {string} params.searchType - Type of search (cft, name, contact)
@@ -84,7 +83,6 @@ export async function getDonationList(params = {}) {
     // Add optional params if provided
     if (params.startDate) queryParams.start_date = params.startDate;
     if (params.endDate) queryParams.end_date = params.endDate;
-    // [TD-101] cause query param removed
     if (params.frequency) queryParams.frequency = params.frequency;
     if (params.search) queryParams.search = params.search;
     if (params.searchType) queryParams.search_type = params.searchType;
@@ -180,7 +178,6 @@ export async function getDonationFilters() {
     return {
       success: true,
       data: {
-        // [TD-101] causes options removed
         paymentModes: data.payment_modes || [],
       }
     };
@@ -190,7 +187,6 @@ export async function getDonationFilters() {
       success: false,
       error: error.message,
       data: {
-        // [TD-101] causes options removed (empty fallback)
         paymentModes: [],
       }
     };

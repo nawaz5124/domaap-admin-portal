@@ -83,8 +83,8 @@ export default function Reports() {
     'donation': {
       title: 'Donation Report',
       icon: '📊',
-      showFilters: ['paymentMode', 'fundType', 'frequency', 'status', 'giftAid'], // [TD-101] cause filter removed
-      columns: ['cftNo', 'donorName', 'paymentMode', 'fundType', 'date', 'amount', 'giftAid'], // [TD-101] cause column removed
+      showFilters: ['paymentMode', 'fundType', 'frequency', 'status', 'giftAid'], 
+      columns: ['cftNo', 'donorName', 'paymentMode', 'fundType', 'date', 'amount', 'giftAid'], 
       showHmrc: false,
     },
     'donor-book': {
@@ -97,7 +97,7 @@ export default function Reports() {
     'gift-aid': {
       title: 'Gift Aid Report',
       icon: '🎁',
-      showFilters: ['fundType', 'status'], // [TD-101] cause filter removed
+      showFilters: ['fundType', 'status'], 
       columns: ['cftNo', 'donorName', 'address', 'postcode', 'date', 'amount', 'giftAid'],
       showHmrc: true,
     },
@@ -111,7 +111,6 @@ export default function Reports() {
     donorName:   { label: 'Donor Name',   align: 'left' },
     paymentMode: { label: 'Payment Mode', align: 'left' },
     fundType:    { label: 'Fund Type',    align: 'left' },
-    // [TD-101] cause columnDef removed
     date:        { label: 'Date',         align: 'left' },
     amount:      { label: 'Amount',       align: 'right' },
     giftAid:     { label: 'Gift Aid',     align: 'center' },
@@ -132,7 +131,7 @@ export default function Reports() {
   const [activePeriod, setActivePeriod] = useState('this-tax-year');
 
   // 7 Filters
-  // 6 Filters ([TD-101] cause filter state removed)
+  // 6 Filters 
   const [paymentMode, setPaymentMode] = useState('all');
   const [fundType, setFundType] = useState('all');
   const [frequency, setFrequency] = useState('all');
@@ -160,7 +159,7 @@ export default function Reports() {
     setSelectedReport(reportId);
     // Reset all filters to 'all'
     setPaymentMode('all');
-    setFundType('all'); // [TD-101] cause reset removed
+    setFundType('all'); 
     setFrequency('all');
     setStatus('all');
     setGiftAid('all');
@@ -282,7 +281,6 @@ export default function Reports() {
       { value: 'Lillah', label: 'Lillah' },
       // [TD-101] 'Other' option removed (backend returns qs.none() for it; Zakat option = parked addition)
     ],
-        // [TD-101] cause options removed (keys were stale vs real data anyway)
 
     frequency: [
       { value: 'all', label: 'All Frequencies' },
@@ -306,7 +304,7 @@ export default function Reports() {
 
   const filterSetters = {
     paymentMode: setPaymentMode,
-    fundType: setFundType, // [TD-101] cause setter removed
+    fundType: setFundType, 
     frequency: setFrequency,
     status: setStatus,
     giftAid: setGiftAid,
@@ -314,7 +312,7 @@ export default function Reports() {
 
   const filterValues = {
     paymentMode,
-    fundType, // [TD-101] cause value removed
+    fundType, 
     frequency,
     status,
     giftAid,
@@ -328,7 +326,7 @@ export default function Reports() {
     startDate,
     endDate,
     paymentMode,
-    fundType, // [TD-101] cause param removed
+    fundType, 
     frequency,
     status,
     giftAid,
@@ -661,7 +659,6 @@ export default function Reports() {
                     <span className={styles.filterLabel}>
                       {filterKey === 'paymentMode' && 'Payment Method'}
                       {filterKey === 'fundType' && 'Fund Type'}
-                      {/* [TD-101] cause label removed */}
                       {filterKey === 'frequency' && 'Frequency'}
                       {filterKey === 'status' && 'Status'}
                       {filterKey === 'giftAid' && 'Gift Aid'}

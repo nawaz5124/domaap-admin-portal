@@ -360,7 +360,6 @@ export default function DonationHistory() {
                 <th>Type</th>
                 <th>Fund</th>
                 <th>G-Aid</th>
-                {/* [TD-101] Cause column header removed */}
                 <th>Route</th>
                 <th>Status</th>
                 <th>Receipt</th>
@@ -369,7 +368,7 @@ export default function DonationHistory() {
             <tbody>
               {donations.length === 0 ? (
                 <tr>
-                  <td colSpan="8" className="empty-state"> {/* [TD-101] 9→8, Cause column removed */}
+                  <td colSpan="8" className="empty-state"> 
                     <div className="empty-icon">📖</div>
                     <div className="empty-title">No donations found</div>
                     <div className="empty-subtitle">
@@ -399,7 +398,6 @@ export default function DonationHistory() {
                         </span>
                       </td>
                       <td>{d.giftAid ? <span className="yes">✅</span> : <span className="no">—</span>}</td>
-                      {/* [TD-101] Cause cell removed */}
                       <td>{getRouteIcon(d.route)}</td>
                       <td><span className="status-done">✅ {d.status}</span></td>
                       <td>
