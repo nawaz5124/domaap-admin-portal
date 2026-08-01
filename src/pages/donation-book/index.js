@@ -145,7 +145,6 @@ export default function DonationBook() {
       value: endDate,
       onChange: (val) => { setEndDate(val); resetPage(); },
     },
-        // [TD-101] Cause filter dropdown removed (legacy campaign data; Type filter = later controlled change)
     {
       type: 'select',
       value: selectedFrequency,
