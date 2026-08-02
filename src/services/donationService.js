@@ -107,9 +107,6 @@ export async function getDonationList(params = {}) {
       type: donation.type,
       typeColor: donation.type_color,
       
-      // Cause/Fund
-      // [TD-101] cause/causeKey/causeColor mapping removed (backend still sends them — dead weight, dies with TD-099)
-
       
       // Frequency
       frequency: donation.frequency,

@@ -54,12 +54,6 @@ const FUND_TYPE_OPTIONS = [
   { value: 'zakat', label: 'Zakat' },
 ];
 
-// [TD-101] KEPT deliberately — legacy cause segmentation for email audiences (backend twin: admin_email_service causes filter); retires with TD-099 drop-column
-const CAUSE_OPTIONS = [
-  { value: 'sponsoring_child', label: 'Sponsoring a Child' },
-  { value: 'building_institutions', label: 'Building Institutions' },
-  { value: 'education', label: 'Education' },
-];
 
 const FREQUENCY_OPTIONS = [
   { value: 'Monthly', label: 'Monthly' },
@@ -89,7 +83,6 @@ const DATE_RANGE_OPTIONS = [
 // ============================================================
 const DEFAULT_FILTERS = {
   fund_types: [],
-  causes: [],
   frequencies: [],
   donor_type: 'all',
   newsletter_only: false,
@@ -515,7 +508,6 @@ export default function ComposeEmailPage() {
   // Count how many filters are active
   const activeFilterCount = [
     groupFilters.fund_types.length > 0,
-    groupFilters.causes.length > 0,
     groupFilters.frequencies.length > 0,
     groupFilters.donor_type !== 'all',
     groupFilters.newsletter_only,
@@ -624,23 +616,6 @@ export default function ComposeEmailPage() {
                 </div>
               </div>
 
-              {/* ---- Cause ---- */}
-              <div className={styles.filterGroup}>
-                <label className={styles.filterLabel}>Cause</label>
-                <div className={styles.chipRow}>
-                  {CAUSE_OPTIONS.map((opt) => (
-                    <button
-                      key={opt.value}
-                      className={`${styles.filterChip} ${
-                        groupFilters.causes.includes(opt.value) ? styles.filterChipActive : ''
-                      }`}
-                      onClick={() => handleToggleFilterArray('causes', opt.value)}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
 
               {/* ---- Frequency ---- */}
               <div className={styles.filterGroup}>

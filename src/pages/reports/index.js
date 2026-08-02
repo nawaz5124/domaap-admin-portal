@@ -279,7 +279,6 @@ export default function Reports() {
       { value: 'all', label: 'All Fund Types' },
       { value: 'Sadaqah', label: 'Sadaqah' },
       { value: 'Lillah', label: 'Lillah' },
-      // [TD-101] 'Other' option removed (backend returns qs.none() for it; Zakat option = parked addition)
     ],
 
     frequency: [
