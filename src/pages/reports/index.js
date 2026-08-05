@@ -420,12 +420,7 @@ export default function Reports() {
             </div>
             <div className={styles.statLabel}>With Mobile</div>
           </div>
-          <div className={`${styles.statCard} ${styles.statCardRed}`}>
-            <div className={`${styles.statNumber} ${styles.statNumberRed}`}>
-              {formatNumber(stats.withGDPR)}
-            </div>
-            <div className={styles.statLabel}>GDPR Consent</div>
-          </div>
+
         </div>
       );
     }

@@ -279,8 +279,6 @@ export default function AddNewDonor() {
             </div>
           </div>
 
-
-
           {/* Footer */}
           <div className="form-footer">
             <button type="button" onClick={() => router.push('/donor-bank')} className="btn-secondary">
