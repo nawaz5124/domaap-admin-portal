@@ -279,6 +279,7 @@ export default function Reports() {
       { value: 'all', label: 'All Fund Types' },
       { value: 'Sadaqah', label: 'Sadaqah' },
       { value: 'Lillah', label: 'Lillah' },
+      { value: 'Zakat',   label: 'Zakat' },
     ],
 
     frequency: [
