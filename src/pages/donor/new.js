@@ -279,19 +279,6 @@ export default function AddNewDonor() {
             </div>
           </div>
 
-          {/* Consent */}
-          <div className="section">
-            <h3 className="section-title">
-              <span>✅</span> Consent & Preferences
-            </h3>
-            
-
-
-            <div className="info-box">
-              <p>ℹ️ <strong>Note:</strong> Gift Aid and CFT Fund consent can also be updated on individual donations.</p>
-            </div>
-          </div>
-
           {/* Footer */}
           <div className="form-footer">
             <button type="button" onClick={() => router.push('/donor-bank')} className="btn-secondary">
