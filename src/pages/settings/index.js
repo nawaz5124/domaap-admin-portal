@@ -99,7 +99,7 @@ export default function Settings() {
     lastUpdated: 'January 2026',
     organization: 'Camel Foundation Trust',
     charityNumber: 'Registered Charity',
-    support: 'support@camelfoundation.org',
+    support: 'info@camelfoundation.org',
     docs: 'https://docs.camelfoundation.org'
   };
 
