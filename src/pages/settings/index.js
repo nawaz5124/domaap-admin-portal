@@ -58,7 +58,7 @@ export default function Settings() {
       icon: '🎁',
       title: 'Donation Settings',
       description: 'Fund types, Gift Aid settings', 
-      status: 'coming-soon',
+      status: 'available',
       color: '#ec4899',
       items: ['Fund Types (Zakat, Sadaqah, Lillah)', 'Gift Aid Rate', 'Receipt Settings'] 
     },
@@ -353,7 +353,13 @@ export default function Settings() {
           <div
             key={section.id}
             style={styles.card(section.color, activeSection === section.id)}
-            onClick={() => setActiveSection(section.id)}
+            onClick={() => {
+              if (section.id === 'donations') {
+                router.push('/settings/donation-types');
+                return;
+              }
+              setActiveSection(section.id);
+            }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-4px)';
               e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.12)';
