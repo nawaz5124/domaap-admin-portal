@@ -60,7 +60,7 @@ export default function Settings() {
       description: 'Fund types, Gift Aid settings', 
       status: 'available',
       color: '#ec4899',
-      items: ['Fund Types (Zakat, Sadaqah, Lillah)', 'Gift Aid Rate', 'Receipt Settings'] 
+      items: ['Donation Types — live', 'Gift Aid Rate — coming soon', 'Receipt Settings — coming soon']
     },
     {
       id: 'notifications',
@@ -355,7 +355,7 @@ export default function Settings() {
             style={styles.card(section.color, activeSection === section.id)}
             onClick={() => {
               if (section.id === 'donations') {
-                router.push('/settings/donation-types');
+                router.push('/settings/donations');
                 return;
               }
               setActiveSection(section.id);
