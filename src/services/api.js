@@ -134,7 +134,10 @@ export async function apiRequest(endpoint, options = {}) {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || errorData.detail || `API Error: ${response.status}`);
+      const error = new Error(errorData.error || errorData.detail || `API Error: ${response.status}`);
+      error.status = response.status;
+      error.body = errorData; // e.g. { errors: { name: ["..."] } } from validation
+      throw error;
     }
 
     return await response.json();

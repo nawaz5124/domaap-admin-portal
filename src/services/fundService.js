@@ -62,5 +62,59 @@ export async function getAllFunds() {
   }
 }
 
-const fundService = { getAllFunds, mapApiFund, FALLBACK_FUNDS };
+// ===================================================================
+// WRITE PATH — FUND-P4. Rules live in the API; this layer only maps
+// shapes and normalises failures into { success, fieldErrors, error }.
+// ===================================================================
+
+// Portal form (camelCase) -> API body (snake_case). `code` is never sent.
+function toApiBody(form) {
+  return {
+    name: form.name,
+    tagline: form.tagline || '',
+    colour: form.colour || '',
+    emoji: form.emoji || '',
+    is_active: !!form.isActive,
+  };
+}
+
+function failure(error, fallbackMessage) {
+  const fieldErrors = error?.body?.errors || null; // { name: ["..."], is_active: ["..."] }
+  const first = fieldErrors ? Object.values(fieldErrors).flat()[0] : null;
+  return { success: false, fieldErrors, error: first || error?.message || fallbackMessage };
+}
+
+export async function createFund(form) {
+  try {
+    const response = await api.post('/admin/funds/', toApiBody(form));
+    return { success: true, data: mapApiFund(response.fund) };
+  } catch (error) {
+    logger.error('[FUNDS] createFund failed', error.message);
+    return failure(error, 'Could not add the donation type');
+  }
+}
+
+export async function updateFund(id, form) {
+  try {
+    const response = await api.put(`/admin/funds/${id}/`, toApiBody(form));
+    return { success: true, data: mapApiFund(response.fund) };
+  } catch (error) {
+    logger.error('[FUNDS] updateFund failed', error.message);
+    return failure(error, 'Could not save the changes');
+  }
+}
+
+// Mirrors make_fund_code() in the API for the live preview only — the server decides.
+export function previewCode(name) {
+  return (name || '')
+    .normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[-\s]+/g, '_')
+    .replace(/^[-_]+|[-_]+$/g, '')
+    .slice(0, 32)
+    .replace(/_+$/, '');
+}
+
+const fundService = { getAllFunds, createFund, updateFund, previewCode, mapApiFund, FALLBACK_FUNDS };
 export default fundService;

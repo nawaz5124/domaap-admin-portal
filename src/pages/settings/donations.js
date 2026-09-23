@@ -15,6 +15,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { getAllFunds } from '@/services/fundService';
+import FundForm from '@/components/settings/FundForm';
 
 const COLUMNS = 'minmax(0, 1fr) 150px 110px 110px 130px 80px';
 
@@ -38,6 +39,9 @@ export default function DonationSettings() {
   const [source, setSource] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [adding, setAdding] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [toast, setToast] = useState(null);
 
   const load = useCallback(async () => {
     setIsLoading(true);
@@ -53,6 +57,26 @@ export default function DonationSettings() {
   }, []);
 
   useEffect(() => { load(); }, [load]);
+
+  useEffect(() => {
+    if (!toast) return undefined;
+    const t = setTimeout(() => setToast(null), 3000);
+    return () => clearTimeout(t);
+  }, [toast]);
+
+  const canEdit = source === 'api';              // fallback rows have no id — nothing to edit
+  const formOpen = adding || editingId !== null;  // one form at a time
+  const openAdd = () => { setEditingId(null); setAdding(true); };
+  const openEdit = (id) => { setAdding(false); setEditingId(id); };
+  const closeForm = () => { setAdding(false); setEditingId(null); };
+  const activeExcluding = (id) => funds.filter((f) => f.isActive && f.id !== id).length;
+
+  // In-place refresh: no refetch, no skeleton flash. The API row is the truth.
+  const handleSaved = (fund, mode) => {
+    setFunds((prev) => (mode === 'add' ? [...prev, fund] : prev.map((f) => (f.id === fund.id ? fund : f))));
+    closeForm();
+    setToast(`✓ ${fund.name} ${mode === 'add' ? 'added' : 'updated'}`);
+  };
 
   const styles = {
     header: { marginBottom: '32px' },
@@ -138,6 +162,11 @@ export default function DonationSettings() {
       fontSize: '13px', fontWeight: '600', color: '#1e3a5f', background: 'white',
       border: '1px solid #e5e7eb', borderRadius: '8px', padding: '8px 14px', cursor: 'pointer',
     },
+        toast: {
+      position: 'fixed', right: '24px', bottom: '24px', zIndex: 50,
+      backgroundColor: '#166534', color: 'white', fontSize: '14px', fontWeight: '600',
+      padding: '12px 18px', borderRadius: '12px', boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
+    },
     warn: {
       margin: '16px 24px 0', padding: '12px 16px', borderRadius: '8px',
       backgroundColor: '#fef3c7', color: '#92400e', fontSize: '13px',
@@ -165,9 +194,9 @@ export default function DonationSettings() {
             <p style={styles.sectionHint}>These appear on the donation form, in the order shown</p>
           </div>
           <button
-            style={{ ...styles.addBtn, ...styles.disabled }}
-            disabled
-            title="Adding arrives in the next update"
+            style={{ ...styles.addBtn, ...(!canEdit || formOpen ? styles.disabled : {}) }}
+            disabled={!canEdit || formOpen}
+            onClick={openAdd}
           >
             + Add donation type
           </button>
@@ -187,6 +216,10 @@ export default function DonationSettings() {
           <span>Added</span>
           <span />
         </div>
+
+        {adding && (
+          <FundForm mode="add" otherActiveCount={activeExcluding(null)} onSaved={handleSaved} onCancel={closeForm} />
+        )}
 
         {isLoading ? (
           [0, 1, 2].map((i) => (
@@ -213,7 +246,8 @@ export default function DonationSettings() {
           </div>
         ) : (
           funds.map((fund) => (
-            <div key={fund.code} style={styles.row(fund.isActive)}>
+            <div key={fund.code}>
+            <div style={styles.row(fund.isActive)}>
               <div style={styles.nameCell}>
                 <span style={styles.swatch(fund.colour)} />
                 <span style={styles.emoji}>{fund.emoji}</span>
@@ -231,14 +265,21 @@ export default function DonationSettings() {
               <span style={styles.num}>{(fund.donationCount ?? 0).toLocaleString('en-GB')}</span>
               <span style={styles.muted}>{formatDate(fund.createdAt)}</span>
               <span style={{ textAlign: 'right' }}>
-                <button
-                  style={{ ...styles.editBtn, ...styles.disabled }}
-                  disabled
-                  title="Editing arrives in the next update"
+                                <button
+                  style={{ ...styles.editBtn, ...(!canEdit || formOpen ? styles.disabled : {}) }}
+                  disabled={!canEdit || formOpen}
+                  onClick={() => openEdit(fund.id)}
                 >
                   Edit
                 </button>
               </span>
+            </div>
+            {editingId === fund.id && (
+              <FundForm
+                mode="edit" fund={fund} otherActiveCount={activeExcluding(fund.id)}
+                onSaved={handleSaved} onCancel={closeForm}
+              />
+            )}
             </div>
           ))
         )}
@@ -256,8 +297,10 @@ export default function DonationSettings() {
               <p style={styles.sectionHint}>{p.hint}</p>
             </div>
           </div>
-        </section>
+                </section>
       ))}
+
+      {toast && <div style={styles.toast}>{toast}</div>}
     </>
   );
 }
