@@ -22,9 +22,9 @@ import logger from '@/utils/logger';
 
 // Mirrors migration 0031_seed_core_funds — last-resort display only.
 export const FALLBACK_FUNDS = [
-  { id: null, code: 'sadaqah', name: 'Sadaqah', tagline: 'Voluntary charity',         colour: '#f97316', emoji: '🤲', isActive: true, createdAt: null, updatedAt: null },
-  { id: null, code: 'lillah',  name: 'Lillah',  tagline: 'For the sake of Allah',     colour: '#8b5cf6', emoji: '🕌', isActive: true, createdAt: null, updatedAt: null },
-  { id: null, code: 'zakat',   name: 'Zakat',   tagline: 'Obligatory charity (2.5%)', colour: '#22c55e', emoji: '🌟', isActive: true, createdAt: null, updatedAt: null },
+    { id: null, code: 'sadaqah', name: 'Sadaqah', tagline: 'Voluntary charity',         colour: '#f97316', emoji: '🤲', isActive: true, donationCount: 0, createdAt: null, updatedAt: null },
+    { id: null, code: 'lillah',  name: 'Lillah',  tagline: 'For the sake of Allah',     colour: '#8b5cf6', emoji: '🕌', isActive: true, donationCount: 0, createdAt: null, updatedAt: null },
+    { id: null, code: 'zakat',   name: 'Zakat',   tagline: 'Obligatory charity (2.5%)', colour: '#22c55e', emoji: '🌟', isActive: true, donationCount: 0, createdAt: null, updatedAt: null },
 ];
 
 // API row (snake_case) -> portal shape (camelCase)
@@ -37,8 +37,8 @@ export function mapApiFund(row) {
     colour:    row.colour || '#6b7280',
     emoji:     row.emoji || '',
     isActive:  row.is_active,
+    donationCount: row.donation_count ?? 0,
     createdAt: row.created_at || null,
-    updatedAt: row.updated_at || null,
   };
 }
 
