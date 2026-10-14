@@ -334,8 +334,8 @@ export default function Login() {
 
             <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid #e5e7eb', textAlign: 'center', fontSize: '13px', color: '#6b7280' }}>
               Need help? Contact{' '}
-              <a href="mailto:support@camelfoundation.org.uk" style={{ color: '#1e3a5f', textDecoration: 'none' }}>
-                support@camelfoundation.org.uk
+              <a href="mailto:info@camelfoundation.org" style={{ color: '#1e3a5f', textDecoration: 'none' }}>
+                info@camelfoundation.org
               </a>
             </div>
           </div>
@@ -463,7 +463,7 @@ export default function Login() {
                 type="text"
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
-                placeholder="admin@camelfoundation.org.uk"
+                placeholder="info@camelfoundation.org"
                 disabled={isLoading}
                 autoComplete="username"
                 autoCapitalize="none"
@@ -559,8 +559,8 @@ export default function Login() {
 
           <div style={{ marginTop: '32px', paddingTop: '24px', borderTop: '1px solid #e5e7eb', textAlign: 'center', fontSize: '14px', color: '#6b7280' }}>
             Need help? Contact{' '}
-            <a href="mailto:support@camelfoundation.org.uk" style={{ color: '#4b5563', textDecoration: 'none' }}>
-              support@camelfoundation.org.uk
+            <a href="mailto:info@camelfoundation.org" style={{ color: '#4b5563', textDecoration: 'none' }}>
+              info@camelfoundation.org
             </a>
           </div>
         </div>

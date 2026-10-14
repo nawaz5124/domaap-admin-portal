@@ -58,9 +58,9 @@ export default function Settings() {
       icon: '🎁',
       title: 'Donation Settings',
       description: 'Fund types, Gift Aid settings', 
-      status: 'coming-soon',
+      status: 'available',
       color: '#ec4899',
-      items: ['Fund Types (Zakat, Sadaqah, Lillah)', 'Gift Aid Rate', 'Receipt Settings'] 
+      items: ['Donation Types — live', 'Gift Aid Rate — coming soon', 'Receipt Settings — coming soon']
     },
     {
       id: 'notifications',
@@ -99,7 +99,7 @@ export default function Settings() {
     lastUpdated: 'January 2026',
     organization: 'Camel Foundation Trust',
     charityNumber: 'Registered Charity',
-    support: 'support@camelfoundation.org',
+    support: 'info@camelfoundation.org',
     docs: 'https://docs.camelfoundation.org'
   };
 
@@ -353,7 +353,13 @@ export default function Settings() {
           <div
             key={section.id}
             style={styles.card(section.color, activeSection === section.id)}
-            onClick={() => setActiveSection(section.id)}
+            onClick={() => {
+              if (section.id === 'donations') {
+                router.push('/settings/donations');
+                return;
+              }
+              setActiveSection(section.id);
+            }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-4px)';
               e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.12)';
