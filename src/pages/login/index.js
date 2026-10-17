@@ -13,6 +13,8 @@
 
 
 import { useState, useEffect } from 'react';
+import TwoStepForm from '@/components/auth/TwoStepForm';
+import { isLoginV2Enabled, login as loginV2, authenticate2fa, isMfaPending, fieldErrors } from '@/services/authV2';
 import { useRouter } from 'next/router';
 import logger from '@/utils/logger';
 
@@ -30,6 +32,8 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [isMobile, setIsMobile] = useState(false);
+  const [step, setStep] = useState('credentials');  // Login V2: 'credentials' | 'code'
+  const [code, setCode] = useState('');
 
   // Check for mobile on mount and resize
   useEffect(() => {
@@ -66,7 +70,56 @@ export default function Login() {
     // Also clear localStorage
     localStorage.removeItem('user');
   };
+    // ── Login V2 (allauth) ─────────────────────────────────────────────
+  const finishV2 = (body) => {
+    const u = body?.data?.user || {};
+    localStorage.setItem('user', JSON.stringify({ username: u.username, email: u.email, display: u.display, loginVersion: 2 }));
+    const hasMfa = (body?.data?.methods || []).some((m) => m.method === 'mfa');
+    router.push(hasMfa ? '/dashboard' : '/settings/security?setup=1');
+  };
 
+  const handleSubmitV2 = async () => {
+    if (!identifier.includes('@')) {
+      setError('Please sign in with your email address');
+      setIsLoading(false);
+      return;
+    }
+    try {
+      const { status, body } = await loginV2(identifier.trim(), password);
+      if (status === 401 && isMfaPending(body)) {
+        setStep('code');
+      } else if (status === 200) {
+        finishV2(body);
+      } else {
+        const fe = fieldErrors(body);
+        setError(fe.password || fe.email || fe._ || 'Sign-in failed. Please try again.');
+      }
+    } catch (err) {
+      setError('Network error. Please check your connection.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCodeSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setIsLoading(true);
+    try {
+      const { status, body } = await authenticate2fa(code.trim());
+      if (status === 200) finishV2(body);
+      else setError(fieldErrors(body).code || 'Incorrect code. Please try again.');
+    } catch (err) {
+      setError('Network error. Please check your connection.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const backToCredentials = () => { setStep('credentials'); setCode(''); setError(''); };
+  // ──────────────────────────────────────────────────────────────────
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -80,6 +133,11 @@ export default function Login() {
     if (!password) {
       setError('Please enter your password');
       setIsLoading(false);
+      return;
+    }
+
+        if (isLoginV2Enabled()) {
+      await handleSubmitV2();
       return;
     }
 
@@ -229,6 +287,9 @@ export default function Login() {
               </div>
             )}
 
+            {step === 'code' ? (
+              <TwoStepForm code={code} setCode={setCode} onSubmit={handleCodeSubmit} onBack={backToCredentials} isLoading={isLoading} />
+            ) : (
             <form onSubmit={handleSubmit}>
               <div style={{ marginBottom: '16px' }}>
                 <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '6px' }}>
@@ -331,6 +392,7 @@ export default function Login() {
                 )}
               </button>
             </form>
+            )}
 
             <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid #e5e7eb', textAlign: 'center', fontSize: '13px', color: '#6b7280' }}>
               Need help? Contact{' '}
@@ -454,6 +516,9 @@ export default function Login() {
             </div>
           )}
 
+                    {step === 'code' ? (
+            <TwoStepForm code={code} setCode={setCode} onSubmit={handleCodeSubmit} onBack={backToCredentials} isLoading={isLoading} />
+          ) : (
           <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: '20px' }}>
               <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '8px' }}>
@@ -555,7 +620,8 @@ export default function Login() {
                 'Sign In'
               )}
             </button>
-          </form>
+                    </form>
+          )}
 
           <div style={{ marginTop: '32px', paddingTop: '24px', borderTop: '1px solid #e5e7eb', textAlign: 'center', fontSize: '14px', color: '#6b7280' }}>
             Need help? Contact{' '}

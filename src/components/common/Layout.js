@@ -21,6 +21,7 @@ import { useRouter } from 'next/router';
 import Sidebar from './Sidebar';
 import logger from '@/utils/logger';
 import { logout } from '@/services/api';
+import { isLoginV2Enabled, logoutV2 } from '@/services/authV2';
 
 export default function Layout({ children, activeMenu }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -102,7 +103,13 @@ export default function Layout({ children, activeMenu }) {
   // 🚪 Logout Function
   // ===================================================================
   const handleLogout = async () => {
-    logger.debug('🚪 Logging out...');
+        logger.debug('🚪 Logging out...');
+    if (isLoginV2Enabled()) {
+      await logoutV2();                      // DELETE the Django session; allauth answers 401 = done
+      localStorage.removeItem('user');
+      window.location.href = '/portal/login';
+      return;
+    }
     await logout();
     // logout() handles: POST to /auth/admin-logout/, cookie cleanup,
     // localStorage cleanup, and full-page redirect to /portal/login.
