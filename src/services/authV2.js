@@ -65,6 +65,7 @@ export async function getAuthenticators()  { return request('GET', '/account/aut
 export async function getTotp()            { return request('GET', '/account/authenticators/totp'); }
 export async function activateTotp(code)   { return request('POST', '/account/authenticators/totp', { code }); }
 export async function getRecoveryCodes()   { return request('GET', '/account/authenticators/recovery-codes'); }
+export async function createRecoveryCodes(){ return request('POST', '/account/authenticators/recovery-codes'); }
 
 /** True when the login POST says "password accepted, second step pending". */
 export function isMfaPending(body) {

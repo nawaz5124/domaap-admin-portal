@@ -74,7 +74,8 @@ export default function Login() {
   const finishV2 = (body) => {
     const u = body?.data?.user || {};
     localStorage.setItem('user', JSON.stringify({ username: u.username, email: u.email, display: u.display, loginVersion: 2 }));
-    router.push('/dashboard');
+    const hasMfa = (body?.data?.methods || []).some((m) => m.method === 'mfa');
+    router.push(hasMfa ? '/dashboard' : '/settings/security?setup=1');
   };
 
   const handleSubmitV2 = async () => {
