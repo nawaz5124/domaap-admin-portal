@@ -13,6 +13,14 @@
 import { useState } from 'react';
 import { createFund, updateFund, previewCode } from '@/services/fundService';
 
+
+const EMOJI_CHOICES = [
+    '🤲', '🕌', '🕋', '🌙', '⭐', '🌟', '📿', '🧕',
+    '💧', '🍞', '🍚', '🥘', '📚', '🎓', '🏫', '✏️',
+    '🏠', '🩺', '💊', '⛑️', '👶', '👨‍👩‍👧', '👵', '🧑‍🦽',   
+    '🐄', '🐐', '🌾', '🌱', '☀️', '❤️', '🤝', '🎁',
+  ];
+
 const TAGLINE_MAX = 60;
 const HEX = /^#[0-9a-f]{6}$/i;
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
