@@ -31,9 +31,9 @@ export default function Settings() {
       icon: '👥',
       title: 'User Management',
       description: 'Admin users, roles, and permissions',
-      status: 'coming-soon',
+      status: 'available',
       color: '#8b5cf6',
-      items: ['Admin Users', 'Roles & Permissions', 'Invite User', 'Access Logs']
+      items: ['Admin Users — live', 'Roles & Permissions — flags for now', 'Invite User — coming soon', 'Access Logs — coming soon']
     },
     {
       id: 'payments',
@@ -356,6 +356,10 @@ export default function Settings() {
             onClick={() => {
               if (section.id === 'donations') {
                 router.push('/settings/donations');
+                return;
+              }
+              if (section.id === 'users') {
+                router.push('/settings/users');
                 return;
               }
               setActiveSection(section.id);
