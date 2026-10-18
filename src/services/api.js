@@ -94,6 +94,12 @@ export async function apiRequest(endpoint, options = {}) {
     headers['Authorization'] = `Bearer ${accessToken}`;
   }
 
+  const method = (options.method || 'GET').toUpperCase();
+  const csrfToken = UNSAFE_METHODS.has(method) ? readCookie('csrftoken') : null;
+  if (csrfToken) {
+    headers['X-CSRFToken'] = csrfToken;
+  }
+
   const fetchOptions = {
     ...options,
     headers,
@@ -227,3 +233,13 @@ export default {
   clearAdminCookies,
   API_BASE_URL,
 };
+
+// [LOGIN-V2] Django session auth enforces CSRF on unsafe methods. The csrftoken
+// cookie is readable (CSRF_COOKIE_HTTPONLY=False), so echo it as X-CSRFToken.
+// Harmless under V1 — JWT ignores the header; no cookie → no header.
+export function readCookie(name) {
+  if (typeof document === 'undefined') return null;
+  const row = document.cookie.split('; ').find((r) => r.startsWith(`${name}=`));
+  return row ? decodeURIComponent(row.slice(name.length + 1)) : null;
+}
+const UNSAFE_METHODS = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
